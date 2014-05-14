@@ -1,0 +1,28 @@
+{
+  "name": "fsm-as-promised",
+  "version": "0.1.0",
+  "description": "",
+  "author": {
+    "name": "Vlad Stirbu",
+    "email": "vlad.stirbu@ieee.org"
+  },
+  "license": "MIT",
+  "main": "index.js",
+  "keywords": [
+    "state machine",
+    "async",
+    "promises"
+  ],
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "mocha"
+  },
+  "devDependencies": {
+    "chai": "^1.9.1",
+    "chai-as-promised": "^4.1.1",
+    "es6-promise": "^1.0.0",
+    "mocha": "^1.18.2"
+  }
+}
