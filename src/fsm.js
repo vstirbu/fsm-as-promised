@@ -11,8 +11,8 @@ function StateMachine(configuration, target) {
   'use strict';
 
   var events = {},
+      states = {},
       inTransition = false,
-      noopTransition = 0,
       current,
       Promise = Promise || require('es6-promise').Promise,
       Type = {
@@ -26,17 +26,28 @@ function StateMachine(configuration, target) {
   configuration.callbacks = configuration.callbacks || {};
   current = configuration.initial || 'none';
 
-  //NOTE: Normalize noop transitions
-  configuration.events.forEach(function (event) {
-    if (event.to === undefined) {
-      event.to = event.from;
+  Object.defineProperty(states, 'add', {
+    value: function (state) {
+      if (!states.hasOwnProperty(state)) {
+        states[state] = {
+          noopTransition: 0
+        }
+      }
     }
   });
 
   configuration.events.forEach(function (event) {
+    //NOTE: Normalize noop transitions
+    if (event.to === undefined) {
+      event.to = event.from;
+    }
+
     if (!events.hasOwnProperty(event.name)) {
       events[event.name] = event;
     }
+
+    states.add(event.from);
+    states.add(event.to);
   });
 
   for (var name in events) {
@@ -97,7 +108,7 @@ function StateMachine(configuration, target) {
       }
       break;
     case Type.INTER:
-      if (noopTransition > 0) {
+      if (states[current].noopTransition > 0) {
         throw new Error('Previous transition pending');
       }
       break;
@@ -122,7 +133,7 @@ function StateMachine(configuration, target) {
   function onenterstate(options) {
     switch (type(options)) {
     case Type.NOOP:
-      noopTransition = noopTransition - 1;
+      states[current].noopTransition = states[current].noopTransition - 1;
       break;
     default:
       inTransition = false;
@@ -136,7 +147,7 @@ function StateMachine(configuration, target) {
   function onleavestate(options) {
     switch (type(options)) {
     case Type.NOOP:
-      noopTransition = noopTransition + 1;
+      states[current].noopTransition = states[current].noopTransition + 1;
       break;
     default:
       inTransition = true;
