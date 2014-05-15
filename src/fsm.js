@@ -10,11 +10,11 @@ module.exports = StateMachine;
 function StateMachine(configuration, target) {
   'use strict';
 
-  var events = {},
+  var Promise = Promise || require('es6-promise').Promise,
+      events = {},
       states = {},
       inTransition = false,
       current,
-      Promise = Promise || require('es6-promise').Promise,
       Type = {
         NOOP: 0,
         INTER: 1,
@@ -28,24 +28,44 @@ function StateMachine(configuration, target) {
 
   Object.defineProperty(states, 'add', {
     value: function (state) {
-      if (!states.hasOwnProperty(state)) {
-        states[state] = {
+      var self = this;
+
+      function addName(name) {
+        self[name] = self[name] || {
           noopTransition: 0
-        }
+        };
       }
+
+      if (state instanceof Array) {
+        state.forEach(addName);
+      } else {
+        addName(state);
+      }
+      // console.log('states', self);
+    }
+  });
+
+  Object.defineProperty(events, 'add', {
+    value: function(event) {
+      var self = this;
+
+      self[event.name] = self[event.name] || {};
+
+      if (event.from instanceof Array) {
+        event.from.forEach(function (from) {
+          self[event.name][from] = event.to || self[event.name][from];
+        });
+      } else {
+        self[event.name][event.from] = event.to || self[event.name][event.from];
+      }
+      // console.log('events:', self);
     }
   });
 
   configuration.events.forEach(function (event) {
-    //NOTE: Normalize noop transitions
-    if (event.to === undefined) {
-      event.to = event.from;
-    }
+    events.add(event);
 
-    if (!events.hasOwnProperty(event.name)) {
-      events[event.name] = event;
-    }
-
+    //NOTE: Add states
     states.add(event.from);
     states.add(event.to);
   });
@@ -53,29 +73,42 @@ function StateMachine(configuration, target) {
   for (var name in events) {
     Object.defineProperty(target, name, {
       enumerable: true,
-      value: buildEvent(events[name])
+      value: buildEvent(name)
     });
   }
 
   Object.defineProperties(target, {
+    can: {
+      value: can
+    },
+    cannot: {
+      value: cannot
+    },
     current: {
-      value: current
+      get: function () {
+        return current;
+      }
     },
     is: {
       value: is
     }
   });
 
-  function buildEvent(event) {
+  function buildEvent(name) {
+    // console.log('build event', events[name]);
+    // console.log('name', name);
+    // console.log('from', current);
+    // console.log('to', events[name][current]);
     return function() {
       var args = Array.prototype.slice.call(arguments),
           promise;
 
+
       promise = new Promise(function (resolve, reject) {
         resolve({
-          name: event.name,
-          from: event.from,
-          to: event.to,
+          name: name,
+          from: current,
+          to: events[name][current],
           args: args
         });
       });
@@ -85,19 +118,19 @@ function StateMachine(configuration, target) {
       .then(canTransition)
       .then(configuration.callbacks['onleave' + current])
       .then(onleavestate)
-      .then(configuration.callbacks['on' + event.name])
-      .then(configuration.callbacks['onenter' + event.to])
+      .then(configuration.callbacks['on' + name])
+      .then(configuration.callbacks['onenter' + events[name][current]])
       .then(onenterstate)
       .catch(revert);
     };
   }
 
   function can(name) {
-    return events[name].from === current;
+    return events[name].hasOwnProperty(current);
   }
 
   function cannot(name) {
-    return events[name].from !== current;
+    return !can(name);
   }
 
   function canTransition(options) {
