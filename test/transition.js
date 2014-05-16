@@ -1,10 +1,4 @@
 describe('Transitions', function () {
-  var StateMachine = require('..'),
-      Promise = Promise || require('es6-promise').Promise,
-      chai = require('chai'),
-      chaiAsPromised = require('chai-as-promised'),
-      expect = chai.expect,
-      assert = chai.assert;
 
   it('should allow inter transition', function (done) {
     var fsm = StateMachine({
@@ -104,7 +98,7 @@ describe('Transitions', function () {
     fsm.two();
   });
 
-  it('should throw error on intra when previous nop transition not completed', function (done) {
+  it('should throw error on inter when previous nop transition not completed', function (done) {
     var fsm = StateMachine({
           initial: 'here',
           events: [
@@ -123,6 +117,52 @@ describe('Transitions', function () {
         });
 
     fsm.one();
+  });
+
+  it('should clean up failed inter transition', function (done) {
+    var fsm = StateMachine({
+          initial: 'here',
+          events: [
+           { name: 'one', from: 'here' },
+           { name: 'two', from: 'here', to: 'there' },
+           { name: 'three', from: 'here', to: 'somewhere' }
+          ],
+          callbacks: {
+            ontwo: function (options) {
+              throw new Error('Transition error');
+            }
+          }
+        });
+
+    fsm.two().catch(function (err) {
+      expect(err.message).to.be.equal('Transition error');
+      fsm.three().then(function () {
+        done();
+      });
+    });
+  });
+
+  it('should clean up failed noop transition', function (done) {
+    var fsm = StateMachine({
+          initial: 'here',
+          events: [
+           { name: 'one', from: 'here' },
+           { name: 'two', from: 'here', to: 'there' },
+           { name: 'three', from: 'here', to: 'somewhere' }
+          ],
+          callbacks: {
+            onone: function (options) {
+              throw new Error('Transition error');
+            }
+          }
+        });
+
+    fsm.one().catch(function (err) {
+      expect(err.message).to.be.equal('Transition error');
+      fsm.three().then(function () {
+        done();
+      });
+    });
   });
 
 });

@@ -41,7 +41,6 @@ function StateMachine(configuration, target) {
       } else {
         addName(state);
       }
-      // console.log('states', self);
     }
   });
 
@@ -58,7 +57,6 @@ function StateMachine(configuration, target) {
       } else {
         self[event.name][event.from] = event.to || self[event.name][event.from];
       }
-      // console.log('events:', self);
     }
   });
 
@@ -91,6 +89,12 @@ function StateMachine(configuration, target) {
     },
     is: {
       value: is
+    },
+    //TODO: remove
+    states: {
+      get: function () {
+        return states;
+      }
     }
   });
 
@@ -101,25 +105,47 @@ function StateMachine(configuration, target) {
     // console.log('to', events[name][current]);
     return function() {
       var args = Array.prototype.slice.call(arguments),
-          promise;
+          promise,
+          options = {
+            name: name,
+            from: current,
+            to: events[name][current],
+            args: args
+          };
 
 
       promise = new Promise(function (resolve, reject) {
-        resolve({
-          name: name,
-          from: current,
-          to: events[name][current],
-          args: args
-        });
+        resolve(options);
       });
+
+      function recoverOptions() {
+        return options;
+      }
+
+      //NOTE: Internal error handling stub
+      function revert(err) {
+        switch (type(options)) {
+        case Type.INTER:
+          inTransition = null;
+          break;
+        case Type.NOOP:
+          states[current].noopTransition = states[current].noopTransition - 1;
+          break;
+        default:
+        }
+        throw err;
+      }
 
       return promise
       .then(isValidEvent)
       .then(canTransition)
       .then(configuration.callbacks['onleave' + current])
+      .then(recoverOptions)
       .then(onleavestate)
       .then(configuration.callbacks['on' + name])
+      .then(recoverOptions)
       .then(configuration.callbacks['onenter' + events[name][current]])
+      .then(recoverOptions)
       .then(onenterstate)
       .catch(revert);
     };
@@ -187,12 +213,6 @@ function StateMachine(configuration, target) {
     }
 
     return options;
-  }
-
-  //NOTE: Internal error handling stub
-  function revert(err) {
-    inTransition = null;
-    throw err;
   }
 
   function type(options) {

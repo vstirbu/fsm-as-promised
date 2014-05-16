@@ -1,13 +1,5 @@
 /*jshint -W030 */
 describe('Basic operations', function () {
-  var StateMachine = require('..'),
-      Promise = Promise || require('es6-promise').Promise,
-      chai = require('chai'),
-      chaiAsPromised = require('chai-as-promised'),
-      expect = chai.expect,
-      assert = chai.assert;
-
-  chai.use(chaiAsPromised);
 
   it('should load standalone state machine', function (done) {
     var fsm = StateMachine({
@@ -219,7 +211,82 @@ describe('Basic operations', function () {
     fsm.warn(a, b).then(function () {
       done();
     });
+  });
 
+  it('should call with correct arguments when sync callbacks return undefined', function (done) {
+    var a = '1',
+        b = '2',
+        fsm = StateMachine({
+          initial: 'green',
+          events: [
+            { name: 'warn',  from: 'green',  to: 'yellow' }
+          ],
+          callbacks: {
+            onleavegreen: function (options) {
+              expect(options.args[0]).to.be.equal(a);
+              expect(options.args[1]).to.be.equal(b);
+            },
+            onwarn: function (options) {
+              expect(options.args[0]).to.be.equal(a);
+              expect(options.args[1]).to.be.equal(b);
+            },
+            onenteryellow: function (options) {
+              expect(options.args[0]).to.be.equal(a);
+              expect(options.args[1]).to.be.equal(b);
+            }
+          }
+        });
+
+    fsm.warn(a, b).then(function (options) {
+      expect(options.args[0]).to.be.equal(a);
+      expect(options.args[1]).to.be.equal(b);
+
+      done();
+    });
+  });
+
+  it('should call with correct arguments when async callbacks return undefined', function (done) {
+    var a = '1',
+        b = '2',
+        fsm = StateMachine({
+          initial: 'green',
+          events: [
+            { name: 'warn',  from: 'green',  to: 'yellow' }
+          ],
+          callbacks: {
+            onleavegreen: function (options) {
+              expect(options.args[0]).to.be.equal(a);
+              expect(options.args[1]).to.be.equal(b);
+
+              return makePromise;
+            },
+            onwarn: function (options) {
+              expect(options.args[0]).to.be.equal(a);
+              expect(options.args[1]).to.be.equal(b);
+
+              return makePromise;
+            },
+            onenteryellow: function (options) {
+              expect(options.args[0]).to.be.equal(a);
+              expect(options.args[1]).to.be.equal(b);
+
+              return makePromise;
+            }
+          }
+        });
+
+    function makePromise() {
+      return new Promise(function (resolve, reject) {
+        resolve();
+      });
+    }
+
+    fsm.warn(a, b).then(function (options) {
+      expect(options.args[0]).to.be.equal(a);
+      expect(options.args[1]).to.be.equal(b);
+
+      done();
+    });
   });
 
   it('should call sync callback', function (done) {

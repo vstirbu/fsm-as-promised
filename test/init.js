@@ -1,8 +1,4 @@
 describe('Initialisation', function () {
-  var StateMachine = require('..'),
-      Promise = Promise || require('es6-promise').Promise,
-      chai = require('chai'),
-      expect = chai.expect;
 
   it('should default to "none" state', function () {
     var fsm = StateMachine({
