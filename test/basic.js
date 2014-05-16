@@ -1,25 +1,24 @@
 /*jshint -W030 */
-describe('basic operations', function () {
+describe('Basic operations', function () {
   var StateMachine = require('..'),
       Promise = Promise || require('es6-promise').Promise,
       chai = require('chai'),
       chaiAsPromised = require('chai-as-promised'),
       expect = chai.expect,
-      assert = chai.assert,
-      semaphore = {
-        initial: 'green',
-        events: [
-          { name: 'warn',  from: 'green',  to: 'yellow' },
-          { name: 'panic', from: 'yellow', to: 'red'    },
-          { name: 'calm',  from: 'red',    to: 'yellow' },
-          { name: 'clear', from: 'yellow', to: 'green'  }
-        ]
-      };
+      assert = chai.assert;
 
   chai.use(chaiAsPromised);
 
   it('should load standalone state machine', function (done) {
-    var fsm = StateMachine(semaphore);
+    var fsm = StateMachine({
+      initial: 'green',
+      events: [
+        { name: 'warn',  from: 'green',  to: 'yellow' },
+        { name: 'panic', from: 'yellow', to: 'red'    },
+        { name: 'calm',  from: 'red',    to: 'yellow' },
+        { name: 'clear', from: 'yellow', to: 'green'  }
+      ]
+    });
 
     expect(fsm.current).to.be.equal('green');
     fsm.warn().then(function () {
@@ -46,7 +45,15 @@ describe('basic operations', function () {
   it('should load targeted state machine', function (done) {
     var fsm = {};
 
-    StateMachine(semaphore, fsm);
+    StateMachine({
+      initial: 'green',
+      events: [
+        { name: 'warn',  from: 'green',  to: 'yellow' },
+        { name: 'panic', from: 'yellow', to: 'red'    },
+        { name: 'calm',  from: 'red',    to: 'yellow' },
+        { name: 'clear', from: 'yellow', to: 'green'  }
+      ]
+    }, fsm);
 
     expect(fsm.current).to.be.equal('green');
     fsm.warn().then(function () {
