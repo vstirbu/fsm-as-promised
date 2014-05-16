@@ -141,7 +141,7 @@ function StateMachine(configuration, target) {
       }
       break;
     case Type.INTER:
-      if (states[current].noopTransition > 0) {
+      if (states[current].noopTransition > 0 || inTransition) {
         throw new Error('Previous transition pending');
       }
       break;
@@ -196,7 +196,7 @@ function StateMachine(configuration, target) {
   }
 
   function type(options) {
-    if (options.from === options.to) {
+    if (options.from === options.to || options.to === undefined) {
       return Type.NOOP;
     } else if (options.from === '*') {
       return Type.GENERAL;
