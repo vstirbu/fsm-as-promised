@@ -35,7 +35,9 @@ describe('Basic operations', function () {
   });
 
   it('should load targeted state machine', function (done) {
-    var fsm = {};
+    var fsm = {
+          key: 'value'
+        };
 
     StateMachine({
       initial: 'green',
@@ -44,7 +46,18 @@ describe('Basic operations', function () {
         { name: 'panic', from: 'yellow', to: 'red'    },
         { name: 'calm',  from: 'red',    to: 'yellow' },
         { name: 'clear', from: 'yellow', to: 'green'  }
-      ]
+      ],
+      callbacks: {
+        onleavegreen: function (options) {
+          expect(this.key).to.be.equal('value');
+        },
+        onwarn: function (options) {
+          expect(this.key).to.be.equal('value');
+        },
+        onenteryellow: function (options) {
+          expect(this.key).to.be.equal('value');
+        }
+      }
     }, fsm);
 
     expect(fsm.current).to.be.equal('green');

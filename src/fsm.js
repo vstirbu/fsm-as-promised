@@ -105,6 +105,7 @@ function StateMachine(configuration, target) {
     // console.log('to', events[name][current]);
     return function() {
       var args = Array.prototype.slice.call(arguments),
+          callbacks = configuration.callbacks,
           promise,
           options = {
             name: name,
@@ -117,10 +118,6 @@ function StateMachine(configuration, target) {
       promise = new Promise(function (resolve, reject) {
         resolve(options);
       });
-
-      function recoverOptions() {
-        return options;
-      }
 
       //NOTE: Internal error handling stub
       function revert(err) {
@@ -139,14 +136,11 @@ function StateMachine(configuration, target) {
       return promise
       .then(isValidEvent)
       .then(canTransition)
-      .then(configuration.callbacks['onleave' + current])
-      .then(recoverOptions)
-      .then(onleavestate)
-      .then(configuration.callbacks['on' + name])
-      .then(recoverOptions)
-      .then(configuration.callbacks['onenter' + events[name][current]])
-      .then(recoverOptions)
-      .then(onenterstate)
+      .then(callbacks['onleave' + current] ? callbacks['onleave' + current].bind(target, options) : undefined)
+      .then(onleavestate.bind(target, options))
+      .then(callbacks['on' + name] ? callbacks['on' + name].bind(target, options) : undefined)
+      .then(callbacks['onenter' + events[name][current]] ? callbacks['onenter' + events[name][current]].bind(target, options) : undefined)
+      .then(onenterstate.bind(target, options))
       .catch(revert);
     };
   }
