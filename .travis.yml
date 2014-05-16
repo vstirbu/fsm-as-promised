@@ -1,0 +1,7 @@
+before_install:
+  - npm install -g mocha
+
+language: node_js
+
+node_js:
+  - "0.10"
