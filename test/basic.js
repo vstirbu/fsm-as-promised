@@ -35,9 +35,7 @@ describe('Basic operations', function () {
   });
 
   it('should load targeted state machine', function (done) {
-    var fsm = {
-          key: 'value'
-        };
+    var fsm = {};
 
     StateMachine({
       initial: 'green',
@@ -46,18 +44,7 @@ describe('Basic operations', function () {
         { name: 'panic', from: 'yellow', to: 'red'    },
         { name: 'calm',  from: 'red',    to: 'yellow' },
         { name: 'clear', from: 'yellow', to: 'green'  }
-      ],
-      callbacks: {
-        onleavegreen: function (options) {
-          expect(this.key).to.be.equal('value');
-        },
-        onwarn: function (options) {
-          expect(this.key).to.be.equal('value');
-        },
-        onenteryellow: function (options) {
-          expect(this.key).to.be.equal('value');
-        }
-      }
+      ]
     }, fsm);
 
     expect(fsm.current).to.be.equal('green');
@@ -80,6 +67,34 @@ describe('Basic operations', function () {
     }).catch(function (err) {
       done(err);
     });
+  });
+
+  it('should access targeted state machine properties', function (done) {
+    var fsm = {
+          key: 'value'
+        };
+
+    StateMachine({
+      initial: 'green',
+      events: [
+        { name: 'warn',  from: 'green',  to: 'yellow' }
+      ],
+      callbacks: {
+        onleavegreen: function (options) {
+          expect(this.key).to.be.equal('value');
+        },
+        onwarn: function (options) {
+          expect(this.key).to.be.equal('value');
+        },
+        onenteryellow: function (options) {
+          expect(this.key).to.be.equal('value');
+        }
+      }
+    }, fsm);
+
+    fsm.warn().then(function () {
+      done();
+    })
   });
 
   it('should indicate if can transition - can & cannot', function (done) {
