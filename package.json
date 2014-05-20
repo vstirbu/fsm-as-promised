@@ -24,5 +24,16 @@
     "chai-as-promised": "^4.1.1",
     "es6-promise": "^1.0.0",
     "mocha": "^1.18.2"
+  },
+  "testling": {
+    "harness": "mocha",
+    "files": "test/support/node.js",
+    "scripts": "test/*js",
+    "browsers": [
+      "ie/8..latest",
+      "chrome/latest",
+      "firefox/latest",
+      "safari/latest"
+    ]
   }
 }
