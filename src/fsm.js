@@ -190,9 +190,8 @@ function StateMachine(configuration, target) {
       break;
     default:
       inTransition = false;
+      current = options.to;
     }
-
-    current = options.to;
 
     return options;
   }

@@ -24,6 +24,7 @@ describe('Transitions', function () {
         });
 
     fsm.one().then(function () {
+      expect(fsm.current).to.be.equal('here');
       done();
     });
   });
