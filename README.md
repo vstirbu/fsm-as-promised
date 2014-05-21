@@ -1,8 +1,11 @@
 # Finite State Machine as Promised
 
+A minimalistic finite state machine framework for browser and node implemented using [promises](http://promises-aplus.github.io/promises-spec/).
+
 [![Build Status](https://travis-ci.org/vstirbu/fsm-as-promised.svg?branch=master)](https://travis-ci.org/vstirbu/fsm-as-promised)
 
-A minimalistic finite state machine framework for browser and node implemented using [promises](http://promises-aplus.github.io/promises-spec/).
+[![browser support](https://ci.testling.com/vstirbu/fsm-as-promised.png)
+](https://ci.testling.com/vstirbu/fsm-as-promised)
 
 ## How to use
 
