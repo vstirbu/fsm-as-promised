@@ -1,7 +1,7 @@
 {
   "name": "fsm-as-promised",
   "version": "0.1.1",
-  "description": "A minimalistic finite state machine library using promises ",
+  "description": "A minimalistic finite state machine library using promises",
   "author": {
     "name": "Vlad Stirbu",
     "email": "vlad.stirbu@ieee.org"
@@ -37,7 +37,11 @@
       "ie/8..latest",
       "chrome/latest",
       "firefox/latest",
-      "safari/latest"
+      "safari/latest",
+      "opera/latest",
+      "iphone/latest",
+      "ipad/latest",
+      "android-browser/latest"
     ]
   }
 }
