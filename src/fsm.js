@@ -26,46 +26,12 @@ function StateMachine(configuration, target) {
   configuration.callbacks = configuration.callbacks || {};
   current = configuration.initial || 'none';
 
-  Object.defineProperty(states, 'add', {
-    value: function (state) {
-      var self = this;
-
-      function addName(name) {
-        self[name] = self[name] || {
-          noopTransition: 0
-        };
-      }
-
-      if (state instanceof Array) {
-        state.forEach(addName);
-      } else {
-        addName(state);
-      }
-    }
-  });
-
-  Object.defineProperty(events, 'add', {
-    value: function(event) {
-      var self = this;
-
-      self[event.name] = self[event.name] || {};
-
-      if (event.from instanceof Array) {
-        event.from.forEach(function (from) {
-          self[event.name][from] = event.to || self[event.name][from];
-        });
-      } else {
-        self[event.name][event.from] = event.to || self[event.name][event.from];
-      }
-    }
-  });
-
   configuration.events.forEach(function (event) {
-    events.add(event);
+    addEvent(event);
 
     //NOTE: Add states
-    states.add(event.from);
-    states.add(event.to);
+    addState(event.from);
+    addState(event.to);
   });
 
   for (var name in events) {
@@ -89,14 +55,34 @@ function StateMachine(configuration, target) {
     },
     is: {
       value: is
-    },
-    //TODO: remove
-    states: {
-      get: function () {
-        return states;
-      }
     }
   });
+
+  function addEvent(event) {
+    events[event.name] = events[event.name] || {};
+
+    if (event.from instanceof Array) {
+      event.from.forEach(function (from) {
+        events[event.name][from] = event.to || events[event.name][from];
+      });
+    } else {
+      events[event.name][event.from] = event.to || events[event.name][event.from];
+    }
+  }
+
+  function addState(state) {
+    function addName(name) {
+      states[name] = states[name] || {
+        noopTransition: 0
+      };
+    }
+
+    if (state instanceof Array) {
+      state.forEach(addName);
+    } else {
+      addName(state);
+    }
+  }
 
   function buildEvent(name) {
     // console.log('build event', events[name]);

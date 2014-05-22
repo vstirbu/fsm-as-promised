@@ -13,6 +13,8 @@ describe('Advanced operations', function () {
       expect(fsm.current).to.be.equal('somewhere');
 
       done();
+    }).catch(function (err) {
+      done(err);
     });
   });
 
@@ -50,6 +52,28 @@ describe('Advanced operations', function () {
       expect(fsm.current).to.be.equal('hungry');
 
       done();
+    }).catch(function (err) {
+      done(err);
+    });
+  });
+
+  it('should trigger multiple times events with no state transition', function (done) {
+    var fsm = StateMachine({
+      initial: 'here',
+      events: [
+        { name: 'wait', from: 'here' },
+        { name: 'watch', from: 'here' }
+      ]
+    });
+
+    fsm.wait().then(function () {
+      expect(fsm.current).to.be.equal('here');
+      return fsm.watch();
+    }).then(function () {
+      expect(fsm.current).to.be.equal('here');
+      done();
+    }).catch(function (err) {
+      done(err);
     });
   });
 
@@ -109,6 +133,8 @@ describe('Advanced operations', function () {
       expect(called).to.be.deep.equal([ 'onleavehungry', 'onrest', 'onenterhungry' ]);
 
       done();
+    }).catch(function (err) {
+      done(err);
     });
   });
 
