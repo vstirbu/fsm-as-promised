@@ -54,7 +54,7 @@ The state machine configuration contains an array of event that convey informati
 
 ### Define callbacks
 
-The state machine configuration can define callbacks that are called when leaving or entering a state, or during the transition between the respective states.
+The state machine configuration can define callback functions that are invoked when leaving or entering a state, or during the transition between the respective states. The callbacks must return promises or be thenable.
 
 ### Initialisation options
 
