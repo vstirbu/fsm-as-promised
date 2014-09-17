@@ -2,7 +2,7 @@
 
 A minimalistic finite state machine framework for browser and node implemented using [promises](http://promises-aplus.github.io/promises-spec/).
 
-[![Build Status](https://travis-ci.org/vstirbu/fsm-as-promised.svg?branch=master)](https://travis-ci.org/vstirbu/fsm-as-promised)
+[![Build Status](https://travis-ci.org/vstirbu/fsm-as-promised.svg?branch=master)](https://travis-ci.org/vstirbu/fsm-as-promised) [![Code Climate](https://codeclimate.com/github/vstirbu/fsm-as-promised/badges/gpa.svg)](https://codeclimate.com/github/vstirbu/fsm-as-promised)
 
 [![browser support](https://ci.testling.com/vstirbu/fsm-as-promised.png)
 ](https://ci.testling.com/vstirbu/fsm-as-promised)
