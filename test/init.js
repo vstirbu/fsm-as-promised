@@ -23,4 +23,21 @@ describe('Initialisation', function () {
     expect(fsm.current).to.be.equal('green');
   });
 
+  it('should throw error on transition with array value for \'to\'', function (done) {
+    try {
+      var fsm = StateMachine({
+        initial: 'here',
+        events: [
+          { name: 'jump', from: 'here', to: ['here', 'there'] }
+        ]
+      });
+    } catch (e) {
+      expect(e.message).to.be.equal('Ambigous transition jump');
+
+      done();
+    }
+
+
+  });
+
 });

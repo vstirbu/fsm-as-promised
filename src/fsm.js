@@ -61,6 +61,9 @@ function StateMachine(configuration, target) {
   function addEvent(event) {
     events[event.name] = events[event.name] || {};
 
+    if (event.to instanceof Array) {
+      throw new Error('Ambigous transition ' + event.name);
+    }
     if (event.from instanceof Array) {
       event.from.forEach(function (from) {
         events[event.name][from] = event.to || events[event.name][from];
