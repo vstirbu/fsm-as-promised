@@ -64,6 +64,11 @@ function StateMachine(configuration, target) {
     if (event.to instanceof Array) {
       throw new Error('Ambigous transition ' + event.name);
     }
+
+    if (event.to === undefined) {
+      event.to = event.from;
+    }
+
     if (event.from instanceof Array) {
       event.from.forEach(function (from) {
         events[event.name][from] = event.to || events[event.name][from];
@@ -130,6 +135,7 @@ function StateMachine(configuration, target) {
       .then(callbacks['on' + name] ? callbacks['on' + name].bind(target, options) : undefined)
       .then(callbacks['onenter' + events[name][current]] ? callbacks['onenter' + events[name][current]].bind(target, options) : undefined)
       .then(onenterstate.bind(target, options))
+      .then(callbacks['onentered' + events[name][current]] ? callbacks['onentered' + events[name][current]].bind(target, options) : undefined)
       .catch(revert);
     };
   }

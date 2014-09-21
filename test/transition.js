@@ -166,4 +166,77 @@ describe('Transitions', function () {
     });
   });
 
+  it('should trigger new transition immediately when entered a state', function (done) {
+    var fsm = StateMachine({
+      initial: 'here',
+      events: [
+        { name: 'walk', from: 'here', to: 'there' },
+        { name: 'jump', from: 'there', to: 'somewhere' }
+      ],
+      callbacks: {
+        onenteredthere: function (options) {
+          if (this.condition) {
+            this.jump().then(function () {
+              expect(fsm.is('somewhere')).to.be.true;
+              expect(called).to.be.deep.equal([ 'walk', 'jump' ]);
+
+              done();
+            }).catch(done);
+          }
+        },
+        onjump: function (options) {
+          called.push(options.name);
+        },
+        onwalk: function (options) {
+          called.push(options.name);
+        }
+      }
+    }),
+    called = [];
+
+    fsm.condition = true;
+
+    fsm.walk();
+  });
+
+  it('should trigger inter state transition after specific no-transition event', function (done) {
+    fsm = StateMachine({
+      initial: 'here',
+      events: [
+        { name: 'sit', from: 'here' },
+        { name: 'think', from: 'here'},
+        { name: 'walk', from: 'here', to: 'there' }
+      ],
+      callbacks: {
+        onenteredhere: function (options) {
+          if (options.name === 'sit') {
+            expect(called).to.be.deep.equal(['think', 'sit']);
+            this.walk();
+          }
+        },
+        onenteredthere: function () {
+          expect(called).to.be.deep.equal(['think', 'sit', 'walk']);
+
+          done();
+        },
+        onsit: function () {
+          called.push('sit');
+        },
+        onwalk: function () {
+          called.push('walk');
+        },
+        onthink: function () {
+          called.push('think');
+        }
+      }
+    }),
+    called = [];
+
+    fsm.think().then(function () {
+      expect(called).to.be.deep.equal(['think']);
+
+      fsm.sit();
+    });
+  });
+
 });

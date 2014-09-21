@@ -206,6 +206,67 @@ describe('Basic operations', function () {
 
   });
 
+  it('should call callbacks in proper order during transition events', function (done) {
+    fsm = StateMachine({
+      initial: 'here',
+      events: [
+        { name: 'walk', from: 'here', to: 'there' }
+      ],
+      callbacks: {
+        onleavehere: function () {
+          called.push('leave');
+        },
+        onwalk: function () {
+          called.push('walk');
+        },
+        onenterthere: function () {
+          called.push('enter');
+        },
+        onenteredthere: function () {
+          called.push('entered');
+        }
+      }
+    }),
+    called = [];
+
+    fsm.walk().then(function () {
+      expect(called).to.be.deep.equal(['leave', 'walk', 'enter', 'entered']);
+
+      done();
+    });
+  });
+
+  it('should call callbacks in proper order during no-transition events', function (done) {
+    fsm = StateMachine({
+      initial: 'here',
+      events: [
+        { name: 'walk', from: 'here' }
+      ],
+      callbacks: {
+        onleavehere: function () {
+          called.push('leave');
+        },
+        onwalk: function (options) {
+          called.push('walk');
+          return options;
+        },
+        onenterhere: function () {
+          called.push('enter');
+        },
+        onenteredhere: function () {
+          called.push('entered');
+        }
+      }
+    }),
+    called = [];
+
+    fsm.walk().then(function () {
+      expect(called).to.be.deep.equal(['leave', 'walk', 'enter', 'entered']);
+
+      done();
+    });
+  });
+
   it('should call callbacks with correct arguments', function (done) {
     var a = '1',
         b = '2',
