@@ -7,12 +7,12 @@
 
 module.exports = StateMachine;
 
-Promise || require('es6-promise').polyfill();
+if (Promise === undefined) {
+  require('es6-promise').polyfill();
+}
 
 function StateMachine(configuration, target) {
   'use strict';
-
-  console.log(global.Promise);
 
   var events = {},
       states = {},
