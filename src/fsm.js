@@ -7,11 +7,14 @@
 
 module.exports = StateMachine;
 
+Promise || require('es6-promise').polyfill();
+
 function StateMachine(configuration, target) {
   'use strict';
 
-  var Promise = Promise || require('es6-promise').Promise,
-      events = {},
+  console.log(global.Promise);
+
+  var events = {},
       states = {},
       inTransition = false,
       current,

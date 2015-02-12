@@ -23,13 +23,16 @@
   "scripts": {
     "test": "mocha"
   },
-  "dependencies": {
-    "es6-promise": "^2.0.0"
+  "optionalDependencies": {
+    "es6-promise": "~2.0.0"
   },
   "devDependencies": {
-    "chai": "^1.9.1",
-    "chai-as-promised": "^4.1.1",
-    "mocha": "^1.18.2"
+    "chai": "~1.9.1",
+    "chai-as-promised": "4.1.1",
+    "mocha": "~1.18.1"
+  },
+  "engines": {
+    "node": ">=0.8"
   },
   "testling": {
     "harness": "mocha",
