@@ -7,18 +7,13 @@
 
 module.exports = StateMachine;
 
-try {
-  Promise;
-} catch (e) {
-  if (e instanceof ReferenceError) {
-    require('es6-promise').polyfill();
-  }
-}
+StateMachine.Promise = Promise || require('es6-promise').Promise;
 
 function StateMachine(configuration, target) {
   'use strict';
 
-  var events = {},
+  var Promise = StateMachine.Promise,
+      events = {},
       states = {},
       inTransition = false,
       current,

@@ -23,13 +23,17 @@
   "scripts": {
     "test": "mocha"
   },
-  "optionalDependencies": {
-    "es6-promise": "~2.0.0"
+  "dependencies": {
+    "es6-promise": "^2.0.1"
   },
   "devDependencies": {
-    "chai": "~1.9.1",
-    "chai-as-promised": "4.1.1",
-    "mocha": "~1.18.1"
+    "bluebird": "^2.9.9",
+    "chai": "^1.9.1",
+    "chai-as-promised": "^4.1.1",
+    "mocha": "~1.18.1",
+    "q": "^1.1.2",
+    "rsvp": "^3.0.16",
+    "when": "^3.7.2"
   },
   "engines": {
     "node": ">=0.8"
