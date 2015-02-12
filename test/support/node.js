@@ -5,4 +5,10 @@ var StateMachine = require('../..'),
 global.expect = chai.expect;
 global.StateMachine = StateMachine;
 
-// require('es6-promise').polyfill();
+global.promises = {
+  Default: Promise || require('es6-promise').Promise,
+  bluebird: require('bluebird'),
+  RSVP: require('rsvp').Promise,
+  Q: require('q').Promise,
+  when: require('when').promise
+};
