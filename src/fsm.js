@@ -7,7 +7,11 @@
 
 module.exports = StateMachine;
 
-StateMachine.Promise = Promise || require('es6-promise').Promise;
+try {
+  StateMachine.Promise = Promise;
+} catch (e) {
+  StateMachine.Promise = require('es6-promise').Promise;
+}
 
 function StateMachine(configuration, target) {
   'use strict';
