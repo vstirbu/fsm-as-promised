@@ -7,8 +7,12 @@
 
 module.exports = StateMachine;
 
-if (Promise === undefined) {
-  require('es6-promise').polyfill();
+try {
+  Promise;
+} catch (e) {
+  if (e instanceof ReferenceError) {
+    require('es6-promise').polyfill();
+  }
 }
 
 function StateMachine(configuration, target) {
