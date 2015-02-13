@@ -9,7 +9,7 @@ global.promises = {
   Default: defaultPromise(),
   bluebird: require('bluebird'),
   RSVP: require('rsvp').Promise,
-  Q: require('q').Promise,
+  // Q: require('q').Promise,
   when: require('when').promise
 };
 
