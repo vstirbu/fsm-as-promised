@@ -23,6 +23,14 @@ var StateMachine = require('fsm-as-promised');
 
 Use manually with [browserify](http://browserify.org) for now...
 
+## Configuring promise library
+
+```javascript
+StateMachine.Promise = YourChoiceForPromise
+```
+
+You can choose from the following promise libraries: [bluebird](), [RSVP]() or [when](). The if the environment does not provide ```Promise``` support, the default implementation is es6-promise.
+
 ## Create finite state machine
 
 A state machine object can be created by providing a configuration object:
@@ -201,7 +209,7 @@ fsm.jump().catch(function (err) {
 
 ## Contributing
 
-Installing the library and run tests:
+Install the library and run tests:
 
 ```
 npm install

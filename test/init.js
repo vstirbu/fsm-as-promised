@@ -66,5 +66,32 @@ Object.keys(promises).forEach(function (promise) {
       });
     });
 
+    if (promise !== 'Default') {
+      it('should use the promise library configured per fsm instance', function (done) {
+        StateMachine.Promise = promises[promise];
+
+        var usedPromise = StateMachine.Promise;
+
+        fsm = StateMachine({
+          initial: 'init',
+          events: [
+            { name: 'test', from: 'init' }
+          ],
+          callbacks: {
+            ontest: function (options) {
+              expect(usedPromise).to.be.deep.equal(promises[promise]);
+            }
+          }
+        });
+
+        StateMachine.Promise = promises.Default;
+
+        fsm.test().then(function () {
+          done();
+        });
+      });
+    }
+
+
   });
 });
