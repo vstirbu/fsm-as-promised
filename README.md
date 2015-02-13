@@ -29,7 +29,7 @@ Use manually with [browserify](http://browserify.org) for now...
 StateMachine.Promise = YourChoiceForPromise
 ```
 
-You can choose from the following promise libraries: [bluebird](), [RSVP]() or [when](). The if the environment does not provide ```Promise``` support, the default implementation is es6-promise.
+You can choose from the following promise libraries: [bluebird](https://github.com/petkaantonov/bluebird), [RSVP](https://github.com/tildeio/rsvp.js) or [when](https://github.com/cujojs/when). The if the environment does not provide ```Promise``` support, the default implementation is es6-promise.
 
 ## Create finite state machine
 
