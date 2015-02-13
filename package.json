@@ -37,20 +37,5 @@
   },
   "engines": {
     "node": ">=0.8"
-  },
-  "testling": {
-    "harness": "mocha",
-    "files": "test/support/node.js",
-    "scripts": "test/*js",
-    "browsers": [
-      "ie/8..latest",
-      "chrome/latest",
-      "firefox/latest",
-      "safari/latest",
-      "opera/latest",
-      "iphone/latest",
-      "ipad/latest",
-      "android-browser/latest"
-    ]
   }
 }
