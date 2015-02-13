@@ -422,6 +422,8 @@ Object.keys(promises).forEach(function (promise) {
       fsm.warn().then(function () {
         expect(called).to.be.true;
         done();
+      }).catch(function (err) {
+        done(err);
       });
     });
 
@@ -453,6 +455,8 @@ Object.keys(promises).forEach(function (promise) {
         expect(called_async).to.be.true;
         expect(called_sync).to.be.true;
         done();
+      }).catch(function (err) {
+        done(err);
       });
     });
 
