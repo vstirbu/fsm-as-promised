@@ -1,10 +1,10 @@
 /*jshint -W030 */
 Object.keys(promises).forEach(function (promise) {
-  StateMachine.Promise = promises[promise];
-
   describe('Basic operations: ' + promise, function () {
 
     it('should load standalone state machine', function (done) {
+      StateMachine.Promise = promises[promise];
+
       var fsm = StateMachine({
         initial: 'green',
         events: [
@@ -39,6 +39,8 @@ Object.keys(promises).forEach(function (promise) {
 
     it('should load targeted state machine', function (done) {
       var fsm = {};
+
+      StateMachine.Promise = promises[promise];
 
       StateMachine({
         initial: 'green',
@@ -77,6 +79,8 @@ Object.keys(promises).forEach(function (promise) {
             key: 'value'
           };
 
+      StateMachine.Promise = promises[promise];
+
       StateMachine({
         initial: 'green',
         events: [
@@ -97,7 +101,7 @@ Object.keys(promises).forEach(function (promise) {
 
       fsm.warn().then(function () {
         done();
-      })
+      });
     });
 
     it('should indicate if can transition - can & cannot', function (done) {
@@ -109,6 +113,8 @@ Object.keys(promises).forEach(function (promise) {
           { name: 'calm',  from: 'red',    to: 'yellow' }
         ]
       });
+
+      StateMachine.Promise = promises[promise];
 
       expect(fsm.current).to.be.equal('green');
 
@@ -142,6 +148,8 @@ Object.keys(promises).forEach(function (promise) {
         ]
       });
 
+      StateMachine.Promise = promises[promise];
+
       expect(fsm.is('green')).to.be.true;
       expect(fsm.is('yellow')).to.be.false;
       expect(fsm.is('red')).to.be.false;
@@ -170,6 +178,8 @@ Object.keys(promises).forEach(function (promise) {
           { name: 'calm',  from: 'red',    to: 'yellow' }
         ]
       });
+
+      StateMachine.Promise = promises[promise];
 
       expect(fsm.current).to.be.equal('green');
 
@@ -210,6 +220,8 @@ Object.keys(promises).forEach(function (promise) {
     });
 
     it('should call callbacks in proper order during transition events', function (done) {
+      StateMachine.Promise = promises[promise];
+
       fsm = StateMachine({
         initial: 'here',
         events: [
@@ -240,6 +252,8 @@ Object.keys(promises).forEach(function (promise) {
     });
 
     it('should call callbacks in proper order during no-transition events', function (done) {
+      StateMachine.Promise = promises[promise];
+
       fsm = StateMachine({
         initial: 'here',
         events: [
@@ -271,6 +285,8 @@ Object.keys(promises).forEach(function (promise) {
     });
 
     it('should call callbacks with correct arguments', function (done) {
+      StateMachine.Promise = promises[promise];
+
       var a = '1',
           b = '2',
           fsm = StateMachine({
@@ -306,6 +322,8 @@ Object.keys(promises).forEach(function (promise) {
     });
 
     it('should call with correct arguments when sync callbacks return undefined', function (done) {
+      StateMachine.Promise = promises[promise];
+
       var a = '1',
           b = '2',
           fsm = StateMachine({
@@ -338,6 +356,8 @@ Object.keys(promises).forEach(function (promise) {
     });
 
     it('should call with correct arguments when async callbacks return undefined', function (done) {
+      StateMachine.Promise = promises[promise];
+
       var a = '1',
           b = '2',
           fsm = StateMachine({
@@ -382,6 +402,8 @@ Object.keys(promises).forEach(function (promise) {
     });
 
     it('should call sync callback', function (done) {
+      StateMachine.Promise = promises[promise];
+
       var called = false,
           fsm = StateMachine({
             initial: 'green',
@@ -403,6 +425,8 @@ Object.keys(promises).forEach(function (promise) {
     });
 
     it('should call async callback', function (done) {
+      StateMachine.Promise = promises[promise];
+
       var called = false,
           fsm = StateMachine({
             initial: 'green',
@@ -411,7 +435,7 @@ Object.keys(promises).forEach(function (promise) {
             ],
             callbacks: {
               onwarn: function (options) {
-                return new Promise(function (resolve, reject) {
+                return new StateMachine.Promise(function (resolve, reject) {
                   called = true;
                   resolve(options);
                 });
@@ -428,6 +452,8 @@ Object.keys(promises).forEach(function (promise) {
     });
 
     it('should call mixed sync & async callbacks', function (done) {
+      StateMachine.Promise = promises[promise];
+
       var called_async = false,
           called_sync = false,
           fsm = StateMachine({
@@ -442,7 +468,7 @@ Object.keys(promises).forEach(function (promise) {
                 return options;
               },
               onwarn: function (options) {
-                return new Promise(function (resolve, reject) {
+                return new StateMachine.Promise(function (resolve, reject) {
                   called_async = true;
 
                   resolve(options);

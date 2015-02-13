@@ -1,9 +1,10 @@
 Object.keys(promises).forEach(function (promise) {
-  StateMachine.Promise = promises[promise];
 
   describe('Transitions: ' + promise, function () {
 
     it('should allow inter transition', function (done) {
+      StateMachine.Promise = promises[promise];
+
       var fsm = StateMachine({
             initial: 'here',
             events: [
@@ -18,6 +19,8 @@ Object.keys(promises).forEach(function (promise) {
     });
 
     it('should allow nop transition', function (done) {
+      StateMachine.Promise = promises[promise];
+
       var fsm = StateMachine({
             initial: 'here',
             events: [
@@ -33,6 +36,8 @@ Object.keys(promises).forEach(function (promise) {
     });
 
     it('should allow multiple nop transitions', function (done) {
+      StateMachine.Promise = promises[promise];
+
       var fsm = StateMachine({
             initial: 'here',
             events: [
@@ -60,6 +65,8 @@ Object.keys(promises).forEach(function (promise) {
     });
 
     it('should throw error on nop when previous inter transition not completed', function (done) {
+      StateMachine.Promise = promises[promise];
+
       var fsm = StateMachine({
             initial: 'here',
             events: [
@@ -81,6 +88,8 @@ Object.keys(promises).forEach(function (promise) {
     });
 
     it('should throw error on inter when previous inter transition not completed', function (done) {
+      StateMachine.Promise = promises[promise];
+
       var fsm = StateMachine({
             initial: 'here',
             events: [
@@ -103,6 +112,8 @@ Object.keys(promises).forEach(function (promise) {
     });
 
     it('should throw error on inter when previous nop transition not completed', function (done) {
+      StateMachine.Promise = promises[promise];
+
       var fsm = StateMachine({
             initial: 'here',
             events: [
@@ -124,6 +135,8 @@ Object.keys(promises).forEach(function (promise) {
     });
 
     it('should clean up failed inter transition', function (done) {
+      StateMachine.Promise = promises[promise];
+
       var fsm = StateMachine({
             initial: 'here',
             events: [
@@ -147,6 +160,8 @@ Object.keys(promises).forEach(function (promise) {
     });
 
     it('should clean up failed noop transition', function (done) {
+      StateMachine.Promise = promises[promise];
+
       var fsm = StateMachine({
             initial: 'here',
             events: [
@@ -170,6 +185,8 @@ Object.keys(promises).forEach(function (promise) {
     });
 
     it('should trigger new transition immediately when entered a state', function (done) {
+      StateMachine.Promise = promises[promise];
+
       var fsm = StateMachine({
         initial: 'here',
         events: [
@@ -203,6 +220,8 @@ Object.keys(promises).forEach(function (promise) {
     });
 
     it('should trigger inter state transition after specific no-transition event', function (done) {
+      StateMachine.Promise = promises[promise];
+
       fsm = StateMachine({
         initial: 'here',
         events: [

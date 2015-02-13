@@ -1,10 +1,11 @@
 /*jshint -W030 */
 Object.keys(promises).forEach(function (promise) {
-  StateMachine.Promise = promises[promise];
 
   describe('Advanced operations: ' + promise, function () {
 
     it('should trigger event with multiple "from" states for same event', function (done) {
+      StateMachine.Promise = promises[promise];
+
       var fsm = StateMachine({
             initial: 'here',
             events: [
@@ -22,6 +23,8 @@ Object.keys(promises).forEach(function (promise) {
     });
 
     it('should trigger event with multiple "to" states for same event', function (done) {
+      StateMachine.Promise = promises[promise];
+
       var fsm = StateMachine({
             initial: 'hungry',
             events: [
@@ -61,6 +64,8 @@ Object.keys(promises).forEach(function (promise) {
     });
 
     it('should trigger multiple times events with no state transition', function (done) {
+      StateMachine.Promise = promises[promise];
+
       var fsm = StateMachine({
         initial: 'here',
         events: [
@@ -81,6 +86,8 @@ Object.keys(promises).forEach(function (promise) {
     });
 
     it('should trigger appropriately with multiple "from" and "to" transitions', function (done) {
+      StateMachine.Promise = promises[promise];
+
       var fsm = StateMachine({
             initial: 'hungry',
             events: [

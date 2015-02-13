@@ -1,9 +1,10 @@
 Object.keys(promises).forEach(function (promise) {
-  StateMachine.Promise = promises[promise];
 
   describe('Initialisation: ' + promise, function () {
 
     it('should default to "none" state', function () {
+      StateMachine.Promise = promises[promise];
+
       var fsm = StateMachine({
         events: [
           { name: 'start', from: 'one', to: 'another' }
@@ -14,6 +15,8 @@ Object.keys(promises).forEach(function (promise) {
     });
 
     it('should initialize to provided state', function () {
+      StateMachine.Promise = promises[promise];
+
       var fsm = StateMachine({
         initial: 'green',
         events: [
@@ -27,6 +30,8 @@ Object.keys(promises).forEach(function (promise) {
     });
 
     it('should throw error on transition with array value for \'to\'', function (done) {
+      StateMachine.Promise = promises[promise];
+      
       try {
         var fsm = StateMachine({
           initial: 'here',
