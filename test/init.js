@@ -31,7 +31,7 @@ Object.keys(promises).forEach(function (promise) {
 
     it('should throw error on transition with array value for \'to\'', function (done) {
       StateMachine.Promise = promises[promise];
-      
+
       try {
         var fsm = StateMachine({
           initial: 'here',
@@ -44,6 +44,26 @@ Object.keys(promises).forEach(function (promise) {
 
         done();
       }
+    });
+
+    it('should use the configured promise library', function (done) {
+      StateMachine.Promise = promises[promise];
+
+      fsm = StateMachine({
+        initial: 'init',
+        events: [
+          { name: 'test', from: 'init' }
+        ],
+        callbacks: {
+          ontest: function (options) {
+            expect(StateMachine.Promise).to.be.deep.equal(promises[promise]);
+          }
+        }
+      });
+
+      fsm.test().then(function () {
+        done();
+      });
     });
 
   });
