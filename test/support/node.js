@@ -8,6 +8,7 @@ global.StateMachine = StateMachine;
 global.promises = {
   Default: defaultPromise(),
   bluebird: require('bluebird'),
+  ES6Shim: require('es6-shim').Promise,
   RSVP: require('rsvp').Promise,
   // Q: require('q').Promise,
   when: require('when').promise

@@ -28,6 +28,8 @@ StateMachine.Promise = YourChoiceForPromise
 
 You can choose from the following promise libraries: [bluebird](https://github.com/petkaantonov/bluebird), [RSVP](https://github.com/tildeio/rsvp.js) or [when](https://github.com/cujojs/when). The if the environment does not provide ```Promise``` support, the default implementation is es6-promise.
 
+The library works also with the promise implementation bundled with [es6-shim](https://github.com/paulmillr/es6-shim).
+
 ## Create finite state machine
 
 A state machine object can be created by providing a configuration object:
