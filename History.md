@@ -1,3 +1,7 @@
+# 0.4.1 / 2015-08-13
+
+* Updated dependency on es6-promise
+
 # 0.3.0 / 2015-02-13
 
 * Added configurable support for promise libraries

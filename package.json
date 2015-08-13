@@ -1,10 +1,10 @@
 {
   "name": "fsm-as-promised",
-  "version": "0.4.0",
+  "version": "0.4.1",
   "description": "A minimalistic finite state machine library using promises",
   "author": {
     "name": "Vlad Stirbu",
-    "email": "vlad.stirbu@ieee.org"
+    "email": "vstirbu@gmail.com"
   },
   "license": "MIT",
   "main": "index.js",
@@ -24,13 +24,15 @@
     "test": "mocha"
   },
   "dependencies": {
-    "es6-promise": "^2.0.1"
+    "es6-promise": "^3.0.0"
   },
   "devDependencies": {
     "bluebird": "^2.9.9",
     "chai": "^1.9.1",
     "chai-as-promised": "^4.1.1",
     "es6-shim": "^0.27.1",
+    "kew": "^0.5.0",
+    "lie": "^3.0.0",
     "mocha": "~1.18.1",
     "q": "^1.1.2",
     "rsvp": "^3.0.16",
