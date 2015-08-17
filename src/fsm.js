@@ -132,16 +132,18 @@ function StateMachine(configuration, target) {
         }
         throw err;
       }
-
       return promise
       .then(isValidEvent)
       .then(canTransition)
       .then(callbacks['onleave' + current] ? callbacks['onleave' + current].bind(target, options) : undefined)
+      .then(callbacks['onleave'] ? callbacks['onleave'].bind(target, options) : undefined)
       .then(onleavestate.bind(target, options))
       .then(callbacks['on' + name] ? callbacks['on' + name].bind(target, options) : undefined)
       .then(callbacks['onenter' + events[name][current]] ? callbacks['onenter' + events[name][current]].bind(target, options) : undefined)
+      .then(callbacks['onenter'] ? callbacks['onenter'].bind(target, options) : undefined)
       .then(onenterstate.bind(target, options))
       .then(callbacks['onentered' + events[name][current]] ? callbacks['onentered' + events[name][current]].bind(target, options) : undefined)
+      .then(callbacks['onentered'] ? callbacks['onentered'].bind(target, options) : undefined)
       .catch(revert);
     };
   }

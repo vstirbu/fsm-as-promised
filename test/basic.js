@@ -229,24 +229,32 @@ Object.keys(promises).forEach(function (promise) {
         ],
         callbacks: {
           onleavehere: function () {
-            called.push('leave');
+            called.push('leavehere');
           },
           onwalk: function () {
             called.push('walk');
           },
           onenterthere: function () {
-            called.push('enter');
+            called.push('enterthere');
           },
           onenteredthere: function () {
+            called.push('enteredthere');
+          },
+          onleave: function () {
+            called.push('leave');
+          },
+          onentered: function () {
             called.push('entered');
+          },
+          onenter: function () {
+            called.push('enter');
           }
         }
       }),
       called = [];
 
       fsm.walk().then(function () {
-        expect(called).to.be.deep.equal(['leave', 'walk', 'enter', 'entered']);
-
+        expect(called).to.be.deep.equal(['leavehere', 'leave', 'walk', 'enterthere', 'enter', 'enteredthere', 'entered']);
         done();
       });
     });
@@ -261,16 +269,25 @@ Object.keys(promises).forEach(function (promise) {
         ],
         callbacks: {
           onleavehere: function () {
-            called.push('leave');
+            called.push('leavehere');
           },
           onwalk: function (options) {
             called.push('walk');
             return options;
           },
           onenterhere: function () {
-            called.push('enter');
+            called.push('enterhere');
           },
           onenteredhere: function () {
+            called.push('enteredhere');
+          },
+          onleave: function () {
+            called.push('leave');
+          },
+          onenter: function () {
+            called.push('enter');
+          },
+          onentered: function () {
             called.push('entered');
           }
         }
@@ -278,7 +295,7 @@ Object.keys(promises).forEach(function (promise) {
       called = [];
 
       fsm.walk().then(function () {
-        expect(called).to.be.deep.equal(['leave', 'walk', 'enter', 'entered']);
+        expect(called).to.be.deep.equal(['leavehere', 'leave', 'walk', 'enterhere', 'enter', 'enteredhere','entered']);
 
         done();
       });
@@ -296,6 +313,18 @@ Object.keys(promises).forEach(function (promise) {
             ],
             callbacks: {
               onleavegreen: function (options) {
+                expect(options.args[0]).to.be.equal(a);
+                expect(options.args[1]).to.be.equal(b);
+
+                return options;
+              },
+              onleave: function (options) {
+                expect(options.args[0]).to.be.equal(a);
+                expect(options.args[1]).to.be.equal(b);
+
+                return options;
+              },
+              onenter: function (options) {
                 expect(options.args[0]).to.be.equal(a);
                 expect(options.args[1]).to.be.equal(b);
 
@@ -335,14 +364,32 @@ Object.keys(promises).forEach(function (promise) {
               onleavegreen: function (options) {
                 expect(options.args[0]).to.be.equal(a);
                 expect(options.args[1]).to.be.equal(b);
+
+                return options;
+              },
+              onleave: function (options) {
+                expect(options.args[0]).to.be.equal(a);
+                expect(options.args[1]).to.be.equal(b);
+
+                return options;
+              },
+              onenter: function (options) {
+                expect(options.args[0]).to.be.equal(a);
+                expect(options.args[1]).to.be.equal(b);
+
+                return options;
               },
               onwarn: function (options) {
                 expect(options.args[0]).to.be.equal(a);
                 expect(options.args[1]).to.be.equal(b);
+
+                return options;
               },
               onenteryellow: function (options) {
                 expect(options.args[0]).to.be.equal(a);
                 expect(options.args[1]).to.be.equal(b);
+
+                return options;
               }
             }
           });
@@ -379,6 +426,18 @@ Object.keys(promises).forEach(function (promise) {
                 return makePromise;
               },
               onenteryellow: function (options) {
+                expect(options.args[0]).to.be.equal(a);
+                expect(options.args[1]).to.be.equal(b);
+
+                return makePromise;
+              },
+              onleave: function (options) {
+                expect(options.args[0]).to.be.equal(a);
+                expect(options.args[1]).to.be.equal(b);
+
+                return makePromise;
+              },
+              onenter: function (options) {
                 expect(options.args[0]).to.be.equal(a);
                 expect(options.args[1]).to.be.equal(b);
 

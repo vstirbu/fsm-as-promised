@@ -48,11 +48,21 @@ var fsm = StateMachine({
     onleavehere: function () {
       // do something when leaving state here
     },
+    onleave: function () {
+      // do something when leaving any state
+    },
     onentersomewhere: function () {
       // do something when entering state somewhere
     },
+    onenter: function () {
+      // do something when entering any state
+    },
     onenteredsomewhere: function () {
       // do something after entering state somewhere
+      // transaction is complete and events can be triggered safely
+    },
+    onentered: function () {
+      // do something after entering any state
       // transaction is complete and events can be triggered safely
     }
   }
@@ -192,9 +202,12 @@ fsm.jump();
 The callbacks are called in the following order:
 
 - onleave{stateName}
+- onleave
 - on{eventName}
 - onenter{stateName}
+- onenter
 - onentered{stateName}
+- onentered
 
 ### Handling Errors
 
