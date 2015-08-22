@@ -108,7 +108,10 @@ Object.keys(promises).forEach(function (promise) {
               onentersatisfied: makeCallback('onentersatisfied'),
               onenterfull: makeCallback('onenterfull'),
               onentersick: makeCallback('onentersick'),
-              onenterhungry: makeCallback('onenterhungry')
+              onenterhungry: makeCallback('onenterhungry'),
+
+              onleave: makeCallback('onleave'),
+              onenter: makeCallback('onenter')
             }
           }),
           called = [];
@@ -120,27 +123,27 @@ Object.keys(promises).forEach(function (promise) {
       }
 
       fsm.eat().then(function () {
-        expect(called).to.be.deep.equal([ 'onleavehungry', 'oneat', 'onentersatisfied' ]);
+        expect(called).to.be.deep.equal([ 'onleavehungry', 'onleave', 'oneat', 'onentersatisfied', 'onenter' ]);
 
         called = [];
         return fsm.eat();
       }).then(function () {
-        expect(called).to.be.deep.equal([ 'onleavesatisfied', 'oneat', 'onenterfull' ]);
+        expect(called).to.be.deep.equal([ 'onleavesatisfied', 'onleave', 'oneat', 'onenterfull', 'onenter' ]);
 
         called = [];
         return fsm.eat();
       }).then(function () {
-        expect(called).to.be.deep.equal([ 'onleavefull', 'oneat', 'onentersick' ]);
+        expect(called).to.be.deep.equal([ 'onleavefull', 'onleave', 'oneat', 'onentersick', 'onenter' ]);
 
         called = [];
         return fsm.rest();
       }).then(function () {
-        expect(called).to.be.deep.equal([ 'onleavesick', 'onrest', 'onenterhungry' ]);
+        expect(called).to.be.deep.equal([ 'onleavesick', 'onleave', 'onrest', 'onenterhungry', 'onenter' ]);
 
         called = [];
         return fsm.rest();
       }).then(function () {
-        expect(called).to.be.deep.equal([ 'onleavehungry', 'onrest', 'onenterhungry' ]);
+        expect(called).to.be.deep.equal([ 'onleavehungry', 'onleave', 'onrest', 'onenterhungry', 'onenter' ]);
 
         done();
       }).catch(function (err) {
