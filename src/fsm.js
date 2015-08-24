@@ -123,7 +123,7 @@ function StateMachine(configuration, target) {
       function revert(err) {
         switch (type(options)) {
         case Type.INTER:
-          inTransition = null;
+          inTransition = false;
           break;
         case Type.NOOP:
           states[current].noopTransition = states[current].noopTransition - 1;

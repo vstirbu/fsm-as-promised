@@ -1,3 +1,7 @@
+# 0.5.0 / 2015-08-24
+
+* Added generic event hooks
+
 # 0.4.1 / 2015-08-13
 
 * Updated dependency on es6-promise
