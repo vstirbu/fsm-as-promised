@@ -64,6 +64,10 @@ function StateMachine(configuration, target) {
     }
   });
 
+  function identity(param) {
+    return param;
+  }
+  
   function addEvent(event) {
     events[event.name] = events[event.name] || {};
 
@@ -135,15 +139,15 @@ function StateMachine(configuration, target) {
       return promise
       .then(isValidEvent)
       .then(canTransition)
-      .then(callbacks['onleave' + current] ? callbacks['onleave' + current].bind(target, options) : undefined)
-      .then(callbacks['onleave'] ? callbacks['onleave'].bind(target, options) : undefined)
+      .then(callbacks['onleave' + current] ? callbacks['onleave' + current].bind(target, options) : identity)
+      .then(callbacks['onleave'] ? callbacks['onleave'].bind(target, options) : identity)
       .then(onleavestate.bind(target, options))
-      .then(callbacks['on' + name] ? callbacks['on' + name].bind(target, options) : undefined)
-      .then(callbacks['onenter' + events[name][current]] ? callbacks['onenter' + events[name][current]].bind(target, options) : undefined)
-      .then(callbacks['onenter'] ? callbacks['onenter'].bind(target, options) : undefined)
+      .then(callbacks['on' + name] ? callbacks['on' + name].bind(target, options) : identity)
+      .then(callbacks['onenter' + events[name][current]] ? callbacks['onenter' + events[name][current]].bind(target, options) : identity)
+      .then(callbacks['onenter'] ? callbacks['onenter'].bind(target, options) : identity)
       .then(onenterstate.bind(target, options))
-      .then(callbacks['onentered' + events[name][current]] ? callbacks['onentered' + events[name][current]].bind(target, options) : undefined)
-      .then(callbacks['onentered'] ? callbacks['onentered'].bind(target, options) : undefined)
+      .then(callbacks['onentered' + events[name][current]] ? callbacks['onentered' + events[name][current]].bind(target, options) : identity)
+      .then(callbacks['onentered'] ? callbacks['onentered'].bind(target, options) : identity)
       .catch(revert);
     };
   }
