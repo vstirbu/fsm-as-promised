@@ -24,21 +24,20 @@
     "test": "mocha"
   },
   "dependencies": {
-    "es6-promise": "^3.0.0"
+    "es6-promise": "^3.0.2"
   },
   "devDependencies": {
-    "bluebird": "^2.9.9",
+    "bluebird": "^2.10.2",
     "chai": "^1.9.1",
     "chai-as-promised": "^4.1.1",
-    "es6-shim": "^0.27.1",
-    "kew": "^0.5.0",
-    "lie": "^3.0.0",
-    "mocha": "~1.18.1",
-    "q": "^1.1.2",
-    "rsvp": "^3.0.16",
-    "when": "^3.7.2"
+    "es6-shim": "^0.33.6",
+    "lie": "^3.0.1",
+    "mocha": "^1.18.1",
+    "q": "^1.4.1",
+    "rsvp": "^3.1.0",
+    "when": "^3.7.3"
   },
   "engines": {
-    "node": ">=0.8"
+    "node": ">=0.10"
   }
 }
