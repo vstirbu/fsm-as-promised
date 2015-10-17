@@ -140,14 +140,14 @@ function StateMachine(configuration, target) {
       .then(isValidEvent)
       .then(canTransition)
       .then(callbacks['onleave' + current] ? callbacks['onleave' + current].bind(target, options) : identity)
-      .then(callbacks['onleave'] ? callbacks['onleave'].bind(target, options) : identity)
+      .then(callbacks.onleave ? callbacks.onleave.bind(target, options) : identity)
       .then(onleavestate.bind(target, options))
       .then(callbacks['on' + name] ? callbacks['on' + name].bind(target, options) : identity)
       .then(callbacks['onenter' + events[name][current]] ? callbacks['onenter' + events[name][current]].bind(target, options) : identity)
-      .then(callbacks['onenter'] ? callbacks['onenter'].bind(target, options) : identity)
+      .then(callbacks.onenter ? callbacks.onenter.bind(target, options) : identity)
       .then(onenterstate.bind(target, options))
       .then(callbacks['onentered' + events[name][current]] ? callbacks['onentered' + events[name][current]].bind(target, options) : identity)
-      .then(callbacks['onentered'] ? callbacks['onentered'].bind(target, options) : identity)
+      .then(callbacks.onentered ? callbacks.onentered.bind(target, options) : identity)
       .catch(revert);
     };
   }
