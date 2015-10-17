@@ -7,7 +7,7 @@
     "email": "vstirbu@gmail.com"
   },
   "license": "MIT",
-  "main": "index.js",
+  "main": "lib/fsm.js",
   "keywords": [
     "state machine",
     "async",
