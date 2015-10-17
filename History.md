@@ -1,3 +1,11 @@
+# 0.5.2 / 2015-10-17
+
+* Tested agains lie and Q libraries
+
+# 0.5.1 / 2015-10-16
+
+* Fixed warnings with Bluebird in debug mode
+
 # 0.5.0 / 2015-08-24
 
 * Added generic event hooks
