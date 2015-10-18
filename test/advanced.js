@@ -151,5 +151,35 @@ Object.keys(promises).forEach(function (promise) {
       });
     });
 
+    it('should support spying', function() {
+      var sinon = require('sinon');
+
+      var fsm = StateMachine({
+            initial: 'here',
+            events: [
+              { name: 'one', from: ['here', 'there'], to: 'somewhere' },
+              { name: 'two', from: 'somewhere', to: 'here' }
+            ]
+          });
+
+      expect(function() {
+        sinon.spy(fsm, 'one');
+      }).not.to.throw();
+
+      return fsm.one()
+        .then(function() {
+          expect(fsm.one.callCount).to.equal(1);
+          expect(fsm.current).to.equal('somewhere');
+          fsm.one.restore();
+          return fsm.two();
+        })
+        .then(function() {
+          expect(fsm.current).to.equal('here');
+          return fsm.one();
+        })
+        .then(function() {
+          expect(fsm.current).to.equal('somewhere');
+        });
+    });
   });
 });
