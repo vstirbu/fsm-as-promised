@@ -1,3 +1,7 @@
+# 0.6.0 / 2015-10-19
+
+* Make properties writable
+
 # 0.5.2 / 2015-10-17
 
 * Tested agains lie and Q libraries
