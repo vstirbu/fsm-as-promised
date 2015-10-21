@@ -59,11 +59,11 @@ var fsm = StateMachine({
     },
     onenteredsomewhere: function () {
       // do something after entering state somewhere
-      // transaction is complete and events can be triggered safely
+      // transition is complete and events can be triggered safely
     },
     onentered: function () {
       // do something after entering any state
-      // transaction is complete and events can be triggered safely
+      // transition is complete and events can be triggered safely
     }
   }
 });
