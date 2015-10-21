@@ -10,3 +10,5 @@ node_js:
   - "4.1"
   - "4.2"
   - iojs
+  
+sudo: false
