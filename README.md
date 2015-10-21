@@ -1,6 +1,6 @@
 # Finite State Machine as Promised
 
-A minimalistic finite state machine framework for browser and node implemented using [promises](http://promises-aplus.github.io/promises-spec/).
+A minimalistic finite state machine library for browser and node implemented using [promises](http://promises-aplus.github.io/promises-spec/).
 
 [![Build Status](https://travis-ci.org/vstirbu/fsm-as-promised.svg?branch=master)](https://travis-ci.org/vstirbu/fsm-as-promised) [![Code Climate](https://codeclimate.com/github/vstirbu/fsm-as-promised/badges/gpa.svg)](https://codeclimate.com/github/vstirbu/fsm-as-promised) [![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/vstirbu/fsm-as-promised?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
 
@@ -26,7 +26,7 @@ Use manually with [browserify](http://browserify.org) for now...
 StateMachine.Promise = YourChoiceForPromise
 ```
 
-You can choose from the following promise libraries: [bluebird](https://github.com/petkaantonov/bluebird), [lie](https://github.com/calvinmetcalf/lie), [RSVP](https://github.com/tildeio/rsvp.js), [Q](https://github.com/kriskowal/q) or [when](https://github.com/cujojs/when). The if the environment does not provide ```Promise``` support, the default implementation is [es6-promise](https://github.com/jakearchibald/ES6-Promises).
+You can choose from the following promise libraries: [bluebird](https://github.com/petkaantonov/bluebird), [lie](https://github.com/calvinmetcalf/lie), [RSVP](https://github.com/tildeio/rsvp.js), [Q](https://github.com/kriskowal/q) or [when](https://github.com/cujojs/when). If the environment does not provide ```Promise``` support, the default implementation is [es6-promise](https://github.com/jakearchibald/ES6-Promises).
 
 The library works also with the promise implementation bundled with [es6-shim](https://github.com/paulmillr/es6-shim).
 
@@ -217,6 +217,62 @@ Errors thrown by any of the callbacks called during a transition are propagated 
 fsm.jump().catch(function (err) {
   // do something with err...
 });
+```
+
+### Graceful error recovery
+
+It is not advisable to let the errors that can be handled gracefully at callback level to propagate to the end of the promise chain.
+
+The following is an example where the error is handled inside a synchronous callback:
+
+```javascript
+var fsm = StateMachine({
+  initial: 'green',
+  events: [
+    { name: 'warn',  from: 'green',  to: 'yellow' }
+  ],
+  callbacks: {
+    onwarn: function (options) {
+      try {
+        throw new Error('TestError');
+      } catch (err) {
+        // handle error
+        return options;
+      }
+    }
+  }
+});
+
+fsm.warn().then(function () {
+  fsm.current === 'yellow';
+  // true
+});
+```
+
+The same inside an asynchronous callback:
+
+```javascript
+var fsm = StateMachine({
+  initial: 'green',
+  events: [
+    { name: 'warn',  from: 'green',  to: 'yellow' }
+  ],
+  callbacks: {
+    onwarn: function (options) {
+      return new StateMachine.Promise(function (resolve, reject) {
+        reject(new Error('TestError'));
+      }).catch(function (err) {
+        // handle error
+        return options;
+      });
+    }
+  }
+});
+  
+fsm.warn().then(function () {
+  fsm.current === 'yellow';
+  // true
+})
 ```
 
 ## Contributing
