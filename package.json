@@ -21,7 +21,9 @@
     "test": "test"
   },
   "scripts": {
-    "test": "mocha"
+    "test": "mocha",
+    "test-cov": "istanbul cover _mocha -- -R spec --check-leaks",
+    "test-travis": "istanbul cover _mocha --report lcovonly -- --reporter dot"
   },
   "dependencies": {
     "es6-promise": "^3.0.2"

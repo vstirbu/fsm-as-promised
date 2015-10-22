@@ -1,5 +1,5 @@
 before_install:
-  - npm install -g mocha
+  - npm install -g mocha istanbul coveralls
 
 language: node_js
 
@@ -12,3 +12,9 @@ node_js:
   - iojs
   
 sudo: false
+
+script:
+  - "test -z $(npm -g -ps ls istanbul) || npm run-script test-travis"
+
+after_script:
+  - "test -e ./coverage/lcov.info && cat ./coverage/lcov.info | coveralls"
