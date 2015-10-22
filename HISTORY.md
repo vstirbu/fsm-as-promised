@@ -1,3 +1,8 @@
+# 0.6.1
+
+* Improved transition lifecycle documetation and tests
+* Added graceful error recovery documentation and tests
+
 # 0.6.0 / 2015-10-19
 
 * Make properties writable

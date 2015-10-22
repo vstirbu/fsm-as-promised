@@ -201,13 +201,19 @@ fsm.jump();
 
 The callbacks are called in the following order:
 
-- onleave{stateName}
-- onleave
-- on{eventName}
-- onenter{stateName}
-- onenter
-- onentered{stateName}
-- onentered
+| callback | state in which the callback executes | 
+| --- | --- |
+| onleave{stateName} | from |
+| onleave | from |
+| on{eventName} | _from_ |
+| onenter{stateName} | _from_ |
+| onenter | _from_ |
+| onentered{stateName} | to |
+| onentered | to |
+
+A state is _locked_ if there is an ongoing transition between two different states. While the state is locked no other transitions are allowed.
+
+If the transition is not successful (e.g. an error is thrown from any callback), the state machine returns to the state in which it is executed. 
 
 ### Handling Errors
 
@@ -218,6 +224,8 @@ fsm.jump().catch(function (err) {
   // do something with err...
 });
 ```
+
+:warning: Unhandled errors may lead to inconsistent state machine.
 
 ### Graceful error recovery
 
