@@ -4,6 +4,28 @@ A minimalistic finite state machine library for browser and node implemented usi
 
 [![Build Status](https://travis-ci.org/vstirbu/fsm-as-promised.svg?branch=master)](https://travis-ci.org/vstirbu/fsm-as-promised) [![Code Climate](https://codeclimate.com/github/vstirbu/fsm-as-promised/badges/gpa.svg)](https://codeclimate.com/github/vstirbu/fsm-as-promised) [![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/vstirbu/fsm-as-promised?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
 
+- [How to use](#how-to-use)
+  - [Installation and Setup](#installation-and-setup)
+    - [In node](#in-node)
+    - [In browser](#in-browser)
+- [Configuring promise library](#configuring-promise-library)
+- [Create finite state machine](#create-finite-state-machine)
+  - [Define events](#define-events)
+  - [Define callbacks](#define-callbacks)
+  - [Initialisation options](#initialisation-options)
+    - [Initial state](#initial-state)
+    - [Target](#target)
+- [Callbacks](#callbacks)
+  - [Arguments](#arguments)
+  - [Synchronous](#synchronous)
+  - [Asynchronous](#asynchronous)
+  - [Call order](#call-order)
+- [Handling Errors](#handling-errors)
+  - [Graceful error recovery](#graceful-error-recovery)
+- [Contributing](#contributing)
+- [License](#license)
+- [Credits](#credits)
+
 ## How to use
 
 ### Installation and Setup
