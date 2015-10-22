@@ -2,7 +2,7 @@
 
 A minimalistic finite state machine library for browser and node implemented using [promises](http://promises-aplus.github.io/promises-spec/).
 
-[![Build Status](https://travis-ci.org/vstirbu/fsm-as-promised.svg?branch=master)](https://travis-ci.org/vstirbu/fsm-as-promised) [![Code Climate](https://codeclimate.com/github/vstirbu/fsm-as-promised/badges/gpa.svg)](https://codeclimate.com/github/vstirbu/fsm-as-promised) [![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/vstirbu/fsm-as-promised?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
+[![Build Status](https://travis-ci.org/vstirbu/fsm-as-promised.svg?branch=master)](https://travis-ci.org/vstirbu/fsm-as-promised) [![Coverage Status](https://coveralls.io/repos/vstirbu/fsm-as-promised/badge.svg?branch=master&service=github)](https://coveralls.io/github/vstirbu/fsm-as-promised?branch=master) [![Code Climate](https://codeclimate.com/github/vstirbu/fsm-as-promised/badges/gpa.svg)](https://codeclimate.com/github/vstirbu/fsm-as-promised) [![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/vstirbu/fsm-as-promised?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
 
 - [How to use](#how-to-use)
   - [Installation and Setup](#installation-and-setup)
