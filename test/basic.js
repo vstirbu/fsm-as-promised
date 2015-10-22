@@ -222,7 +222,7 @@ Object.keys(promises).forEach(function (promise) {
     it('should call callbacks in proper order during transition events', function (done) {
       StateMachine.Promise = promises[promise];
 
-      fsm = StateMachine({
+      var fsm = StateMachine({
         initial: 'here',
         events: [
           { name: 'walk', from: 'here', to: 'there' }
@@ -262,7 +262,7 @@ Object.keys(promises).forEach(function (promise) {
     it('should call callbacks in proper order during no-transition events', function (done) {
       StateMachine.Promise = promises[promise];
 
-      fsm = StateMachine({
+      var fsm = StateMachine({
         initial: 'here',
         events: [
           { name: 'walk', from: 'here' }

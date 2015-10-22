@@ -219,7 +219,7 @@ var fsm = StateMachine({
 fsm.jump();
 ```
 
-### Call Order
+### Call order
 
 The callbacks are called in the following order:
 
@@ -237,7 +237,7 @@ A state is _locked_ if there is an ongoing transition between two different stat
 
 If the transition is not successful (e.g. an error is thrown from any callback), the state machine returns to the state in which it is executed. 
 
-### Handling Errors
+## Handling Errors
 
 Errors thrown by any of the callbacks called during a transition are propagated through the promise chain and can be handled like this:
 

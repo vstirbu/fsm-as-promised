@@ -49,7 +49,7 @@ Object.keys(promises).forEach(function (promise) {
     it('should use the configured promise library', function (done) {
       StateMachine.Promise = promises[promise];
 
-      fsm = StateMachine({
+      var fsm = StateMachine({
         initial: 'init',
         events: [
           { name: 'test', from: 'init' }
@@ -72,7 +72,7 @@ Object.keys(promises).forEach(function (promise) {
 
         var usedPromise = StateMachine.Promise;
 
-        fsm = StateMachine({
+        var fsm = StateMachine({
           initial: 'init',
           events: [
             { name: 'test', from: 'init' }

@@ -222,7 +222,7 @@ Object.keys(promises).forEach(function (promise) {
     it('should trigger inter state transition after specific no-transition event', function (done) {
       StateMachine.Promise = promises[promise];
 
-      fsm = StateMachine({
+      var fsm = StateMachine({
         initial: 'here',
         events: [
           { name: 'sit', from: 'here' },
@@ -251,7 +251,7 @@ Object.keys(promises).forEach(function (promise) {
             called.push('think');
           }
         }
-      });
+      }),
       called = [];
 
       fsm.think().then(function () {
