@@ -7,6 +7,7 @@ Object.keys(promises).forEach(function (promise) {
       StateMachine.Promise = promises[promise];
   
       var errorHandled = false,
+          called = [],
           fsm = StateMachine({
             initial: 'green',
             events: [
@@ -19,14 +20,19 @@ Object.keys(promises).forEach(function (promise) {
                 } catch (err) {
                   expect(err.message).to.be.equal('TestError');
                   errorHandled = true;
+                  called.push('onwarn');
                   return options;
                 }
+              },
+              onenteryellow: function () {
+                expect(errorHandled).to.be.true;
+                called.push('onenteryellow');
               }
             }
           });
   
       fsm.warn().then(function () {
-        expect(errorHandled).to.be.true;
+        expect(called).to.be.deep.equal(['onwarn', 'onenteryellow']);
         expect(fsm.current).to.be.equal('yellow');
         done();
       }).catch(function (err) {
@@ -38,6 +44,7 @@ Object.keys(promises).forEach(function (promise) {
       StateMachine.Promise = promises[promise];
   
       var errorHandled = false,
+          called = [],
           fsm = StateMachine({
             initial: 'green',
             events: [
@@ -50,14 +57,19 @@ Object.keys(promises).forEach(function (promise) {
                 }).catch(function (err) {
                   expect(err.message).to.be.equal('TestError');
                   errorHandled = true;
+                  called.push('onwarn');
                   return options;
                 });
+              },
+              onenteryellow: function () {
+                expect(errorHandled).to.be.true;
+                called.push('onenteryellow');
               }
             }
           });
   
       fsm.warn().then(function () {
-        expect(errorHandled).to.be.true;
+        expect(called).to.be.deep.equal(['onwarn', 'onenteryellow']);
         expect(fsm.current).to.be.equal('yellow');
         done();
       }).catch(function (err) {
