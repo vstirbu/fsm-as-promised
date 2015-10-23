@@ -2,6 +2,7 @@
 /* global global */
 var expect = require('chai').expect;
 
+var checkUsedPromise = require('./specs/check-used-promise');
 var init = require('./specs/init');
 var basic = require('./specs/basic');
 var advanced = require('./specs/advanced');
@@ -24,29 +25,7 @@ Object.keys(promises).forEach(function (promise) {
   describe('Promise library: ' + promise, function () {
     
     if (promise !== 'Default') {
-      it('should use the promise library configured per fsm instance', function (done) {
-        StateMachine.Promise = promises[promise];
-
-        var usedPromise = StateMachine.Promise;
-
-        var fsm = StateMachine({
-          initial: 'init',
-          events: [
-            { name: 'test', from: 'init' }
-          ],
-          callbacks: {
-            ontest: function (options) {
-              expect(usedPromise).to.be.deep.equal(promises[promise]);
-            }
-          }
-        });
-
-        StateMachine.Promise = promises.Default;
-
-        fsm.test().then(function () {
-          done();
-        });
-      });
+      checkUsedPromise(promises[promise]);
     }
     
     init(promises[promise]);
