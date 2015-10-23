@@ -1,9 +1,9 @@
-Object.keys(promises).forEach(function (promise) {
+module.exports = function (promise) {
 
-  describe('Initialisation: ' + promise, function () {
+  describe('Initialisation', function () {
 
     it('should default to "none" state', function () {
-      StateMachine.Promise = promises[promise];
+      StateMachine.Promise = promise;
 
       var fsm = StateMachine({
         events: [
@@ -15,7 +15,7 @@ Object.keys(promises).forEach(function (promise) {
     });
 
     it('should initialize to provided state', function () {
-      StateMachine.Promise = promises[promise];
+      StateMachine.Promise = promise;
 
       var fsm = StateMachine({
         initial: 'green',
@@ -30,7 +30,7 @@ Object.keys(promises).forEach(function (promise) {
     });
 
     it('should throw error on transition with array value for \'to\'', function (done) {
-      StateMachine.Promise = promises[promise];
+      StateMachine.Promise = promise;
 
       try {
         var fsm = StateMachine({
@@ -47,7 +47,7 @@ Object.keys(promises).forEach(function (promise) {
     });
 
     it('should use the configured promise library', function (done) {
-      StateMachine.Promise = promises[promise];
+      StateMachine.Promise = promise;
 
       var fsm = StateMachine({
         initial: 'init',
@@ -56,7 +56,7 @@ Object.keys(promises).forEach(function (promise) {
         ],
         callbacks: {
           ontest: function (options) {
-            expect(StateMachine.Promise).to.be.deep.equal(promises[promise]);
+            expect(StateMachine.Promise).to.be.deep.equal(promise);
           }
         }
       });
@@ -65,33 +65,5 @@ Object.keys(promises).forEach(function (promise) {
         done();
       });
     });
-
-    if (promise !== 'Default') {
-      it('should use the promise library configured per fsm instance', function (done) {
-        StateMachine.Promise = promises[promise];
-
-        var usedPromise = StateMachine.Promise;
-
-        var fsm = StateMachine({
-          initial: 'init',
-          events: [
-            { name: 'test', from: 'init' }
-          ],
-          callbacks: {
-            ontest: function (options) {
-              expect(usedPromise).to.be.deep.equal(promises[promise]);
-            }
-          }
-        });
-
-        StateMachine.Promise = promises.Default;
-
-        fsm.test().then(function () {
-          done();
-        });
-      });
-    }
-
-
   });
-});
+}

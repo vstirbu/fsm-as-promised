@@ -1,10 +1,10 @@
-Object.keys(promises).forEach(function (promise) {
-  StateMachine.Promise = promises[promise];
+module.exports = function (promise) {
+  StateMachine.Promise = promise;
 
-  describe('Graceful error recovery: ' + promise, function () {
+  describe('Graceful error recovery', function () {
 
     it('should recover from error in sync callback and continue transition', function (done) {
-      StateMachine.Promise = promises[promise];
+      StateMachine.Promise = promise;
   
       var errorHandled = false,
           called = [],
@@ -41,7 +41,7 @@ Object.keys(promises).forEach(function (promise) {
     });
 
     it('should recover from error in async callback and continue transition', function (done) {
-      StateMachine.Promise = promises[promise];
+      StateMachine.Promise = promise;
   
       var errorHandled = false,
           called = [],
@@ -79,4 +79,4 @@ Object.keys(promises).forEach(function (promise) {
 
   });
   
-});
+}

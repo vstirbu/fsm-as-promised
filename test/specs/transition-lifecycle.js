@@ -1,10 +1,10 @@
-Object.keys(promises).forEach(function (promise) {
-  StateMachine.Promise = promises[promise];
+module.exports = function (promise) {
+  StateMachine.Promise = promise;
 
-  describe('Transition lifecycle with errors: ' + promise, function () {
+  describe('Transition lifecycle with errors', function () {
 
     it('should remain in "from" state when error in onleave{stateName}', function (done) {
-      StateMachine.Promise = promises[promise];
+      StateMachine.Promise = promise;
   
       var errorHandled = false,
           fsm = StateMachine({
@@ -26,7 +26,7 @@ Object.keys(promises).forEach(function (promise) {
     });
     
     it('should remain in "from" state when error in onleave', function (done) {
-      StateMachine.Promise = promises[promise];
+      StateMachine.Promise = promise;
   
       var errorHandled = false,
           fsm = StateMachine({
@@ -48,7 +48,7 @@ Object.keys(promises).forEach(function (promise) {
     });
 
     it('should revert to "from" state when error in on{eventName}', function (done) {
-      StateMachine.Promise = promises[promise];
+      StateMachine.Promise = promise;
   
       var errorHandled = false,
           fsm = StateMachine({
@@ -70,7 +70,7 @@ Object.keys(promises).forEach(function (promise) {
     });
 
     it('should revert to "from" state when error in onenter{stateName}', function (done) {
-      StateMachine.Promise = promises[promise];
+      StateMachine.Promise = promise;
   
       var errorHandled = false,
           fsm = StateMachine({
@@ -92,7 +92,7 @@ Object.keys(promises).forEach(function (promise) {
     });
 
     it('should revert to "from" state when error in onenter', function (done) {
-      StateMachine.Promise = promises[promise];
+      StateMachine.Promise = promise;
   
       var errorHandled = false,
           fsm = StateMachine({
@@ -114,7 +114,7 @@ Object.keys(promises).forEach(function (promise) {
     });
 
     it('should move to "to" state when error in onentered{stateName}', function (done) {
-      StateMachine.Promise = promises[promise];
+      StateMachine.Promise = promise;
   
       var errorHandled = false,
           fsm = StateMachine({
@@ -136,7 +136,7 @@ Object.keys(promises).forEach(function (promise) {
     });
 
     it('should move to "to" state when error in onentered', function (done) {
-      StateMachine.Promise = promises[promise];
+      StateMachine.Promise = promise;
   
       var errorHandled = false,
           fsm = StateMachine({
@@ -159,4 +159,4 @@ Object.keys(promises).forEach(function (promise) {
 
   });
   
-});
+}
