@@ -48,6 +48,8 @@ module.exports = function (promise) {
 
     it('should use the configured promise library', function (done) {
       StateMachine.Promise = promise;
+      
+      var usedPromise = StateMachine.Promise;
 
       var fsm = StateMachine({
         initial: 'init',
@@ -56,6 +58,7 @@ module.exports = function (promise) {
         ],
         callbacks: {
           ontest: function (options) {
+            expect(usedPromise).to.be.deep.equal(promise);
             expect(StateMachine.Promise).to.be.deep.equal(promise);
           }
         }

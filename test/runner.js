@@ -2,7 +2,6 @@
 /* global global */
 var expect = require('chai').expect;
 
-var checkUsedPromise = require('./specs/check-used-promise');
 var init = require('./specs/init');
 var basic = require('./specs/basic');
 var advanced = require('./specs/advanced');
@@ -20,14 +19,8 @@ var promises = {
   when: require('when').promise
 };
 
-
 Object.keys(promises).forEach(function (promise) {
   describe('Promise library: ' + promise, function () {
-    
-    if (promise !== 'Default') {
-      checkUsedPromise(promises[promise]);
-    }
-    
     init(promises[promise]);
     basic(promises[promise]);
     advanced(promises[promise]);
