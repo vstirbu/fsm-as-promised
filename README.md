@@ -26,6 +26,9 @@ A minimalistic finite state machine library for browser and node implemented usi
   - [Synchronous](#synchronous)
   - [Asynchronous](#asynchronous)
   - [Call order](#call-order)
+  - [Returned values](#returned-values)
+    - [Passing data between callbacks](#passing-data-between-callbacks)
+    - [Beyond the library boundary](#beyond-the-library-boundary)
 - [Handling Errors](#handling-errors)
   - [Graceful error recovery](#graceful-error-recovery)
 - [Contributing](#contributing)
@@ -241,7 +244,71 @@ The callbacks are called in the following order:
 
 A state is _locked_ if there is an ongoing transition between two different states. While the state is locked no other transitions are allowed.
 
-If the transition is not successful (e.g. an error is thrown from any callback), the state machine returns to the state in which it is executed. 
+If the transition is not successful (e.g. an error is thrown from any callback), the state machine returns to the state in which it is executed.
+
+### Returned values
+
+By default, each callback in the promise chain is called with the `options` object.
+ 
+#### Passing data between callbacks
+
+Callbacks can pass values that can be used by subsequent callbacks in the promise chain.
+
+```javascript
+var fsm = StateMachine({
+  initial: 'one',
+  events: [
+    { name: 'start', from: 'one', to: 'another' }
+  ],
+  callbacks: {
+    onleave: function (options) {
+      options.foo = 2;
+    },
+    onstart: function (options) {
+      // can use options.foo vlue here
+      if (options.foo === 2) {
+        options.foo++;
+      }
+    },
+    onenter: function (options) {
+      // options.foo === 3
+    }
+  }
+});
+```
+
+This includes also callbacks that are added to the chain by the user.
+
+```javascript
+fsm.start().then(function (options) {
+  // options.foo === 3
+});
+```
+
+#### Beyond the library boundary
+
+The `options` object can be hidden from the promises added by the end user by setting the options.res. This way the subsequent promises that are not part of the state machine work do not receive the `options` object.
+
+```javascript
+var fsm = StateMachine({
+  initial: 'one',
+  events: [
+    { name: 'start', from: 'one', to: 'another' }
+  ],
+  callbacks: {
+    onstart: function (options) {
+      options.res = {
+        val: 'result of running start'
+      };
+    }
+  }
+});
+
+fsm.start().then(function (data) {
+  console.log(data);
+  // { val: 'result of running start' }
+});
+```
 
 ## Handling Errors
 

@@ -1,3 +1,8 @@
+# 0.7.0
+
+* Added option to pass cleaned values to promises add by the fsm user
+* Added deocumentation on how to pass valuess between callbacks
+
 # 0.6.1
 
 * Improved transition lifecycle documetation and tests
