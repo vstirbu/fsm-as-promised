@@ -287,7 +287,7 @@ fsm.start().then(function (options) {
 
 #### Beyond the library boundary
 
-The `options` object can be hidden from the promises added by the end user by setting the options.res. This way the subsequent promises that are not part of the state machine work do not receive the `options` object.
+The `options` object can be hidden from the promises added by the end user by setting the __options.res__ property. This way the subsequent promises that are not part of the state machine work do not receive the `options` object.
 
 ```javascript
 var fsm = StateMachine({
