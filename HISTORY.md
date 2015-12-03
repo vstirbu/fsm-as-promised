@@ -1,3 +1,18 @@
+# 0.8.0
+
+* Added transition shortcut
+
+```javascript
+{ name: 'event', from: ['state1', 'state2'] }
+```
+
+equivalent with:
+
+```javascript
+{ name: 'event', from: 'state1' }
+{ name: 'event', from: 'state2' }
+```
+
 # 0.7.0
 
 * Added option to pass cleaned values to promises add by the fsm user

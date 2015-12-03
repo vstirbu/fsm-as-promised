@@ -20,6 +20,25 @@ module.exports = function (promise) {
         done(err);
       });
     });
+
+    it('should trigger event with multiple "from" states but no "to"', function (done) {
+      StateMachine.Promise = promise;
+  
+      var fsm = StateMachine({
+            initial: 'here',
+            events: [
+              { name: 'one', from: ['here', 'there'] }
+            ]
+          });
+  
+      fsm.one().then(function () {
+        expect(fsm.current).to.be.equal('here');
+  
+        done();
+      }).catch(function (err) {
+        done(err);
+      });
+    });
   
     it('should trigger event with multiple "to" states for same event', function (done) {
       StateMachine.Promise = promise;
@@ -180,5 +199,6 @@ module.exports = function (promise) {
           expect(fsm.current).to.equal('somewhere');
         });
     });
+    
   });
 }
