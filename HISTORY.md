@@ -1,3 +1,7 @@
+# 0.8.1 / 2015-12-09
+
+* Added costom error with properties trigger and current to improve debugging
+
 # 0.8.0
 
 * Added transition shortcut

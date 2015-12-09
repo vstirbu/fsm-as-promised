@@ -40,7 +40,9 @@ module.exports = function (promise) {
           ]
         });
       } catch (e) {
-        expect(e.message).to.be.equal('Ambigous transition jump');
+        expect(e.message).to.be.equal('Ambigous transition');
+        expect(e.trigger).to.be.equal('jump');
+        expect(e.current).to.be.equal('here');
 
         done();
       }

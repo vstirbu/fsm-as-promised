@@ -77,7 +77,8 @@ module.exports = function (promise) {
               ontwo: function (options) {
                 fsm.one().catch(function (err) {
                   expect(err.message).to.be.equal('Previous transition pending');
-
+                  expect(err.trigger).to.be.equal('one');
+                  expect(err.current).to.be.equal('here');
                   done();
                 });
               }
@@ -101,7 +102,8 @@ module.exports = function (promise) {
               ontwo: function (options) {
                 fsm.three().catch(function (err) {
                   expect(err.message).to.be.equal('Previous transition pending');
-
+                  expect(err.trigger).to.be.equal('three');
+                  expect(err.current).to.be.equal('here');
                   done();
                 });
               }
@@ -124,7 +126,8 @@ module.exports = function (promise) {
               onone: function (options) {
                 fsm.two().catch(function (err) {
                   expect(err.message).to.be.equal('Previous transition pending');
-
+                  expect(err.trigger).to.be.equal('two');
+                  expect(err.current).to.be.equal('here');
                   done();
                 });
               }

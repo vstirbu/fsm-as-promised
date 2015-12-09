@@ -185,10 +185,14 @@ module.exports = function (promise) {
 
       fsm.panic().catch(function (err) {
         expect(err.message).to.be.equal('Invalid event in current state');
+        expect(err.trigger).to.be.equal('panic');
+        expect(err.current).to.be.equal(fsm.current);
 
         return fsm.calm();
       }).catch(function (err) {
         expect(err.message).to.be.equal('Invalid event in current state');
+        expect(err.trigger).to.be.equal('calm');
+        expect(err.current).to.be.equal(fsm.current);
 
         return fsm.warn();
       }).then(function () {
@@ -197,10 +201,14 @@ module.exports = function (promise) {
         return fsm.warn();
       }).catch(function (err) {
         expect(err.message).to.be.equal('Invalid event in current state');
+        expect(err.trigger).to.be.equal('warn');
+        expect(err.current).to.be.equal(fsm.current);
 
         return fsm.calm();
       }).catch(function (err) {
         expect(err.message).to.be.equal('Invalid event in current state');
+        expect(err.trigger).to.be.equal('calm');
+        expect(err.current).to.be.equal(fsm.current);
 
         return fsm.panic();
       }).then(function () {
@@ -209,10 +217,14 @@ module.exports = function (promise) {
         return fsm.warn();
       }).catch(function (err) {
         expect(err.message).to.be.equal('Invalid event in current state');
+        expect(err.trigger).to.be.equal('warn');
+        expect(err.current).to.be.equal(fsm.current);
 
         return fsm.panic();
       }).catch(function (err) {
         expect(err.message).to.be.equal('Invalid event in current state');
+        expect(err.trigger).to.be.equal('panic');
+        expect(err.current).to.be.equal(fsm.current);
 
         done();
       });
