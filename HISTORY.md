@@ -1,3 +1,7 @@
+# 0.8.2 / 2016-01-04
+
+* Added promise library support and updated dependencies
+
 # 0.8.1 / 2015-12-09
 
 * Added costom error with properties trigger and current to improve debugging
