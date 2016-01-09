@@ -31,6 +31,8 @@ A minimalistic finite state machine library for browser and node implemented usi
     - [Beyond the library boundary](#beyond-the-library-boundary)
 - [Handling Errors](#handling-errors)
   - [Graceful error recovery](#graceful-error-recovery)
+- [Recipes](#recipes)
+  - [Conditional transitions](#conditional-transitions)
 - [Contributing](#contributing)
 - [License](#license)
 - [Credits](#credits)
@@ -387,6 +389,31 @@ fsm.warn().then(function () {
   fsm.current === 'yellow';
   // true
 })
+```
+
+## Recipes
+
+### Conditional transitions
+
+Conditional transitions can be achieved through transitioning to a pseuso state where the condition is checked, then the apropriate event is triggered:
+
+```javascript
+StateMachine({
+  events: [
+    { name: 'trigger', from: 'existing', to: 'pseudo' },
+    { name: 'triggerOptionA', from: 'pseudo', to: 'option-a' },
+    { name: 'triggerOptionB', from: 'pseudo', to: 'option-b' }
+  ],
+  callbacks: {
+    onenteredpseudo: function () {
+      if (condition) {
+        this.triggerOptionA();
+      } else {
+        this.triggerOptionB();
+      }
+    }
+  }
+});
 ```
 
 ## Contributing
