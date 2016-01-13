@@ -33,6 +33,7 @@ A minimalistic finite state machine library for browser and node implemented usi
   - [Graceful error recovery](#graceful-error-recovery)
 - [Recipes](#recipes)
   - [Conditional transitions](#conditional-transitions)
+- [UML visualization](#uml-visualization)
 - [Contributing](#contributing)
 - [License](#license)
 - [Credits](#credits)
@@ -414,6 +415,17 @@ StateMachine({
     }
   }
 });
+```
+
+## UML visualization
+
+The state machine definitions can be visualized as UML diagrams using [fsm2dot](https://github.com/vstirbu/fsm2dot).
+
+Install fsm2dot and [graphviz](http://www.graphviz.org/), then:
+
+```bash
+fsm2dot -f fsm.js -o fsm.dot
+dot -Tpdf fsm.dot -o fsm.pdf
 ```
 
 ## Contributing
