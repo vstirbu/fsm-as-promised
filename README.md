@@ -1,4 +1,4 @@
-# Finite State Machine as Promised
+![Finite State Machine as Promised](https://raw.github.com/vstirbu/fsm-as-promised/master/fsm-as-promised.png)
 
 A minimalistic finite state machine library for browser and node implemented using [promises](http://promises-aplus.github.io/promises-spec/).
 
