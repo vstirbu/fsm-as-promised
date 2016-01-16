@@ -396,7 +396,25 @@ fsm.warn().then(function () {
 
 ### Conditional transitions
 
-Conditional transitions can be achieved through transitioning to a pseuso state where the condition is checked, then the apropriate event is triggered:
+The library provides a way to define conditional transitions:
+
+```javascript
+StateMachine({
+  events: [
+    { name: 'conditional',
+      from: 'init',
+      to: ['one', 'two'],
+      condition: function (options) {
+        return indexInToStates;
+      }
+    }
+  ]
+});
+```
+
+The condition callback must return an index of the selected state or a promise that resolves to the index. The condition callback is executed after `on{eventName}` callback.
+
+If the above is not suitable, complex conditional transitions can be achieved through transitioning explicitly to a pseuso state where the condition is checked, then the apropriate event is triggered:
 
 ```javascript
 StateMachine({

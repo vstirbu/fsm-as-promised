@@ -1,3 +1,8 @@
+# 0.9.0 /
+
+* Added support for conditional transitions
+* Added hasState method
+
 # 0.8.2 / 2016-01-04
 
 * Added promise library support and updated dependencies
