@@ -79,6 +79,8 @@ module.exports = function (promise) {
                   expect(err.message).to.be.equal('Previous transition pending');
                   expect(err.trigger).to.be.equal('one');
                   expect(err.current).to.be.equal('here');
+                  expect(err).to.be.instanceof(StateMachine.FsmError);
+                  expect(err.stack).to.be.not.undefined;
                   done();
                 });
               }
