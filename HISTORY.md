@@ -1,3 +1,7 @@
+# 0.9.1 / 2016-01-31
+
+* add captureStackTrace and expose FsmError ([dsuket](https://github.com/dsuket))
+
 # 0.9.0 /
 
 * Added support for conditional transitions
