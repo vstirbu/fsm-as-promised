@@ -10,6 +10,7 @@ var errorHandling = require('./specs/error-handling');
 var transitionLifecycle = require('./specs/transition-lifecycle');
 var returnValue = require('./specs/return-value');
 var conditionalTransition =  require('./specs/conditional-transition');
+var final =  require('./specs/final');
 
 var promises = {
   Default: defaultPromise,
@@ -32,5 +33,6 @@ Object.keys(promises).forEach(function (promise) {
     transitionLifecycle(promises[promise]);
     returnValue(promises[promise]);
     conditionalTransition(promises[promise]);
+    final(promises[promise]);
   })
 });

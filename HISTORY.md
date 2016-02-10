@@ -1,3 +1,8 @@
+# 0.10.0 / 2016-02-10
+
+* added final configuration property
+* added isFinal state machine object function
+
 # 0.9.1 / 2016-01-31
 
 * add captureStackTrace and expose FsmError ([dsuket](https://github.com/dsuket))

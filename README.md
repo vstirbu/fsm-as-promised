@@ -20,6 +20,7 @@ A minimalistic finite state machine library for browser and node implemented usi
   - [Define callbacks](#define-callbacks)
   - [Initialisation options](#initialisation-options)
     - [Initial state](#initial-state)
+    - [Final states](#final-states)
     - [Target](#target)
 - [Callbacks](#callbacks)
   - [Arguments](#arguments)
@@ -129,7 +130,21 @@ console.log(fsm.current);
 // here
 ```
 
-otherwise the finite state machine's initial state is 'none'.
+otherwise the finite state machine's initial state is `none`.
+
+#### Final states
+
+You can define the final state or states by setting the final property:
+
+```javascript
+var fsm = StateMachine({
+  initial: 'here',
+  final: 'there', //can be a string or array
+  events: [
+    { name: 'jump', from: 'here', to: 'there' }
+  ]
+});
+```
 
 #### Target
 
