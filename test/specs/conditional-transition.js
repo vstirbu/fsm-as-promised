@@ -133,6 +133,67 @@ module.exports = function (promise) {
       });
     });
     
+    it('should receive response set in choice transition callback', function (done) {
+      var fsm = StateMachine({
+        initial: 'init',
+        events: [
+          { name: 'start', from: 'init', to: ['a', 'b'],
+            condition: function (options) {
+              expect(options.res).to.be.equal('start');
+              options.res = 'abc';
+              return 0;
+            }
+          }
+        ],
+        callbacks: {
+          onstart: function (options) {
+            expect(options.res).to.be.undefined;
+            options.res = 'start';
+          },
+          onentera: function (options) {
+            expect(options.res).to.be.equal('abc');
+            options.res = '123';
+          },
+          onentereda: function (options) {
+            expect(options.res).to.be.equal('123');
+            options.res = 'xyz';
+          }
+        }
+      });
+      
+      fsm.start().then(function (result) {
+        expect(result).to.be.equal('xyz');
+        done();
+      });
+    });
+    
+    it('should clear response cache before run', function (done) {
+      var fsm = StateMachine({
+        initial: 'init',
+        events: [
+          { name: 'start', from: 'init', to: ['init', 'a'],
+            condition: function () {
+              return 0;
+            }
+          }
+        ],
+        callbacks: {
+          onstart: function (options) {
+            expect(options.res).to.be.undefined;
+            options.res = 'start';
+          }
+        }
+      });
+      
+      fsm.start().then(function (result) {
+        expect(result).to.be.equal('start');
+        fsm.start().then(function (result) {
+          expect(result).to.be.equal('start');
+          done();
+        });
+      });
+    });
+    
     it('should throw error when out of choice index', function (done) {
       var fsm = StateMachine({
         initial: 'init',

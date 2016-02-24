@@ -1,3 +1,7 @@
+# 0.10.1 / 2016-02-24
+
+* pass options.res corectly in conditional transitions 
+
 # 0.10.0 / 2016-02-10
 
 * added final configuration property
