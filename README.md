@@ -61,7 +61,18 @@ Use manually with [browserify](http://browserify.org) for now...
 StateMachine.Promise = YourChoiceForPromise
 ```
 
-You can choose from the following promise libraries: [bluebird](https://github.com/petkaantonov/bluebird), [lie](https://github.com/calvinmetcalf/lie), [promise](https://github.com/then/promise), [RSVP](https://github.com/tildeio/rsvp.js), [Q](https://github.com/kriskowal/q) or [when](https://github.com/cujojs/when). If the environment does not provide ```Promise``` support, the default implementation is [es6-promise](https://github.com/jakearchibald/ES6-Promises).
+You can choose from the following promise libraries:
+
+* [bluebird](https://github.com/petkaantonov/bluebird),
+* [lie](https://github.com/calvinmetcalf/lie),
+* [native-promise-only](https://github.com/getify/native-promise-only),
+* [pinkie](https://github.com/floatdrop/pinkie),
+* [promise](https://github.com/then/promise),
+* [RSVP](https://github.com/tildeio/rsvp.js),
+* [Q](https://github.com/kriskowal/q),
+* [when](https://github.com/cujojs/when).
+
+If the environment does not provide ```Promise``` support, the default implementation is [es6-promise](https://github.com/jakearchibald/ES6-Promises).
 
 The library works also with the promise implementation bundled with [es6-shim](https://github.com/paulmillr/es6-shim).
 

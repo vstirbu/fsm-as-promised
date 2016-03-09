@@ -17,6 +17,8 @@ var promises = {
   bluebird: require('bluebird'),
   ES6Shim: require('es6-shim').Promise,
   lie: require('lie'),
+  npo: require('native-promise-only'),
+  pinkie: require('pinkie'),
   promise: require('promise'),
   Q: require('q').Promise,
   RSVP: require('rsvp').Promise,
