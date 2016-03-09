@@ -210,9 +210,7 @@ module.exports = function (promise) {
       
         done();
       });
-      
     });
-
   });
   
 }
