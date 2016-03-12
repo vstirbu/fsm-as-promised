@@ -478,6 +478,8 @@ StateMachine({
 });
 ```
 
+If your pseudo state's callback returns a Promise, you must return the call to the event function; e.g. `return this.triggerOptionA()`.
+
 ## UML visualization
 
 The state machine definitions can be visualized as UML diagrams using [fsm2dot](https://github.com/vstirbu/fsm2dot).
