@@ -21,38 +21,76 @@ module.exports = function (promise) {
       
       done();
     });
-    
-    it('should transition to first choice', function (done) {
-      var fsm = StateMachine({
-        initial: 'init',
-        events: [
-          { name: 'start', from: 'init', to: ['a', 'b'], condition: function (options) {
-            return 0;
-          } }
-        ]
+
+    describe('when the condition callback returns a numeric index', function() {
+      it('should transition to first choice', function (done) {
+        var fsm = StateMachine({
+          initial: 'init',
+          events: [
+            { name: 'start', from: 'init', to: ['a', 'b'], condition: function (options) {
+              return 0;
+            } }
+          ]
+        });
+
+        fsm.start().then(function () {
+          expect(fsm.current).to.be.equal('a');
+
+          done();
+        });
       });
-      
-      fsm.start().then(function () {
-        expect(fsm.current).to.be.equal('a');
-      
-        done();
+
+      it('should transition to second choice', function (done) {
+        var fsm = StateMachine({
+          initial: 'init',
+          events: [
+            { name: 'start', from: 'init', to: ['a', 'b'], condition: function (options) {
+              return 1;
+            } }
+          ]
+        });
+
+        fsm.start().then(function () {
+          expect(fsm.current).to.be.equal('b');
+
+          done();
+        });
       });
     });
 
-    it('should transition to second choice', function (done) {
-      var fsm = StateMachine({
-        initial: 'init',
-        events: [
-          { name: 'start', from: 'init', to: ['a', 'b'], condition: function (options) {
-            return 1;
-          } }
-        ]
+    describe('when the condition callback returns a state name', function() {
+      it('should transition to first choice', function (done) {
+        var fsm = StateMachine({
+          initial: 'init',
+          events: [
+            { name: 'start', from: 'init', to: ['a', 'b'], condition: function (options) {
+              return 'a';
+            } }
+          ]
+        });
+
+        fsm.start().then(function () {
+          expect(fsm.current).to.be.equal('a');
+
+          done();
+        });
       });
-      
-      fsm.start().then(function () {
-        expect(fsm.current).to.be.equal('b');
-      
-        done();
+
+      it('should transition to second choice', function (done) {
+        var fsm = StateMachine({
+          initial: 'init',
+          events: [
+            { name: 'start', from: 'init', to: ['a', 'b'], condition: function (options) {
+              return 'b';
+            } }
+          ]
+        });
+
+        fsm.start().then(function () {
+          expect(fsm.current).to.be.equal('b');
+
+          done();
+        });
       });
     });
 
