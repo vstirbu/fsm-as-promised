@@ -432,14 +432,30 @@ StateMachine({
       from: 'init',
       to: ['one', 'two'],
       condition: function (options) {
-        return indexInToStates;
+        return 0; // transition to state 'one'
       }
     }
   ]
 });
 ```
 
-The condition callback must return an index of the selected state or a promise that resolves to the index. The condition callback is executed after `on{eventName}` callback.
+The above is equivalent to:
+
+```javascript
+StateMachine({
+  events: [
+    { name: 'conditional',
+      from: 'init',
+      to: ['one', 'two'],
+      condition: function (options) {
+        return 'one'; // transition to state 'one'
+      }
+    }
+  ]
+});
+```
+
+The condition callback must return the `to` Array's index of the selected state, the name of the selected state, or a promise which resolves to either.  The condition callback is executed after `on{eventName}` callback.
 
 If the above is not suitable, complex conditional transitions can be achieved through transitioning explicitly to a pseuso state where the condition is checked, then the apropriate event is triggered:
 
