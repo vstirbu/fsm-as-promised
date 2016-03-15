@@ -11,6 +11,7 @@ var transitionLifecycle = require('./specs/transition-lifecycle');
 var returnValue = require('./specs/return-value');
 var conditionalTransition =  require('./specs/conditional-transition');
 var final =  require('./specs/final');
+var callbackPrefix = require('./specs/callback-prefix');
 
 var promises = {
   Default: defaultPromise,
@@ -36,5 +37,6 @@ Object.keys(promises).forEach(function (promise) {
     returnValue(promises[promise]);
     conditionalTransition(promises[promise]);
     final(promises[promise]);
-  })
+    callbackPrefix(promises[promise]);
+  });
 });
