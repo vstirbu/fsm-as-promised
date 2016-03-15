@@ -1,3 +1,12 @@
+# 0.12.0 / 2016-03-15
+
+* FSM target is EventEmitter
+* Reimplemented library using composable factories (aka [stampit](https://github.com/stampit-org/stampit))
+
+# 0.11.0 / 2016-03-14
+
+* Condition calback returns state name in conditional transitions
+
 # 0.10.1 / 2016-02-24
 
 * pass options.res corectly in conditional transitions 
