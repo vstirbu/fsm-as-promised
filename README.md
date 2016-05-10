@@ -31,6 +31,7 @@ A minimalistic finite state machine library for browser and node implemented usi
   - [Returned values](#returned-values)
     - [Passing data between callbacks](#passing-data-between-callbacks)
     - [Beyond the library boundary](#beyond-the-library-boundary)
+  - [Configuring callback prefix](#configuring-callback-prefix)
 - [Handling Errors](#handling-errors)
   - [Graceful error recovery](#graceful-error-recovery)
 - [Recipes](#recipes)
@@ -338,6 +339,14 @@ fsm.start().then(function (data) {
   console.log(data);
   // { val: 'result of running start' }
 });
+```
+
+### Configuring callback prefix
+
+By default, the callback names start with `on`. You can omit the prefix by setting it to empty string or assign any other prefix:
+
+```javascript
+StateMachine.callbackPrefix = 'customPrefix';
 ```
 
 ## Handling Errors
