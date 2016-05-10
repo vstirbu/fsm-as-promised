@@ -1,3 +1,7 @@
+# 0.13.0 / 2016-05-10
+
+* added custom callback prefix support
+
 # 0.12.0 / 2016-03-15
 
 * FSM target is EventEmitter
