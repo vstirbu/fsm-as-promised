@@ -296,7 +296,7 @@ var fsm = StateMachine({
       options.foo = 2;
     },
     onstart: function (options) {
-      // can use options.foo vlue here
+      // can use options.foo value here
       if (options.foo === 2) {
         options.foo++;
       }
@@ -308,7 +308,7 @@ var fsm = StateMachine({
 });
 ```
 
-This includes also callbacks that are added to the chain by the user.
+This also includes callbacks added to the chain by the user.
 
 ```javascript
 fsm.start().then(function (options) {
@@ -466,7 +466,7 @@ StateMachine({
 
 The condition callback must return the `to` Array's index of the selected state, the name of the selected state, or a promise which resolves to either.  The condition callback is executed after `on{eventName}` callback.
 
-If the above is not suitable, complex conditional transitions can be achieved through transitioning explicitly to a pseuso state where the condition is checked, then the apropriate event is triggered:
+If the above is not suitable, complex conditional transitions can be achieved through transitioning explicitly to a pseuso state where the condition is checked, then the appropriate event is triggered:
 
 ```javascript
 StateMachine({
@@ -511,7 +511,7 @@ npm test
 
 ## License
 
-The library is available under MIT license.
+The library is available under the MIT license.
 
 ## Credits
 
