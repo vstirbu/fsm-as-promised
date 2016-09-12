@@ -1,3 +1,8 @@
+# 0.13.1 / 2016-09-12
+
+* added documentation for common methods
+* dropped iojs tests
+
 # 0.13.0 / 2016-05-10
 
 * added custom callback prefix support

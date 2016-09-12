@@ -355,7 +355,7 @@ StateMachine.callbackPrefix = 'customPrefix';
 The library adds the following utilities to the finite state machine object:
 
 * `can(event)` checks if the _event_ can be triggered in the current state,
-* `cannot(event)` checks if the _event_ cannot be triggered int he current state,
+* `cannot(event)` checks if the _event_ cannot be triggered in the current state,
 * `is(state)` checks if the _state_ is the current state,
 * `isFinal(state)` checks if the _state_ is final state. If no state is provided the current state is checked. 
 * `hasState(state)` checks if the finite state machine has the _state_.
