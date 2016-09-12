@@ -32,6 +32,7 @@ A minimalistic finite state machine library for browser and node implemented usi
     - [Passing data between callbacks](#passing-data-between-callbacks)
     - [Beyond the library boundary](#beyond-the-library-boundary)
   - [Configuring callback prefix](#configuring-callback-prefix)
+- [Common Methods](#common-methods)
 - [Handling Errors](#handling-errors)
   - [Graceful error recovery](#graceful-error-recovery)
 - [Recipes](#recipes)
@@ -348,6 +349,16 @@ By default, the callback names start with `on`. You can omit the prefix by setti
 ```javascript
 StateMachine.callbackPrefix = 'customPrefix';
 ```
+
+## Common Methods
+
+The library adds the following utilities to the finite state machine object:
+
+* `can(event)` checks if the _event_ can be triggered in the current state,
+* `cannot(event)` checks if the _event_ cannot be triggered int he current state,
+* `is(state)` checks if the _state_ is the current state,
+* `isFinal(state)` checks if the _state_ is final state. If no state is provided the current state is checked. 
+* `hasState(state)` checks if the finite state machine has the _state_.
 
 ## Handling Errors
 
