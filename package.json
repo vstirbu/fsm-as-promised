@@ -27,7 +27,7 @@
   },
   "dependencies": {
     "es6-promise": "^4.0.2",
-    "lodash": "^3.10.1",
+    "lodash": "^4.16.2",
     "stampit": "^3.0.1"
   },
   "devDependencies": {
