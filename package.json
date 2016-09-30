@@ -1,6 +1,6 @@
 {
   "name": "fsm-as-promised",
-  "version": "0.13.1",
+  "version": "0.13.2",
   "description": "A minimalistic finite state machine library using promises",
   "author": {
     "name": "Vlad Stirbu",
@@ -45,6 +45,6 @@
     "when": "^3.7.7"
   },
   "engines": {
-    "node": ">=0.10"
+    "node": ">=4"
   }
 }

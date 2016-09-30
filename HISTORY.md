@@ -1,3 +1,8 @@
+# 0.13.2 / 2016-09-30
+
+* upgraded lodash and stampit dependencies
+* dropped support for node 0.10 and 0.12
+
 # 0.13.1 / 2016-09-12
 
 * added documentation for common methods
