@@ -23,6 +23,7 @@ A minimalistic finite state machine library for browser and node implemented usi
     - [Initial state](#initial-state)
     - [Final states](#final-states)
     - [Target](#target)
+  - [Custom error handler](#custom-error-handler)
 - [Callbacks](#callbacks)
   - [Arguments](#arguments)
   - [Synchronous](#synchronous)
