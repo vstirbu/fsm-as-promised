@@ -403,7 +403,7 @@ The library throws errors with the following messages:
 | Previous transition pending | The previous transition is in progress preventing new ones until it has completed | - |
 | Invalid event in current state | The state machine is in a state that does not allow the requested transition | - |
 
-:warning: Unhandled errors may lead to inconsistent state machine.
+:warning: Unhandled errors may lead to inconsistent state machine. If you reserved resurces as part of a transition, you have to release them if an error occured.
 
 ### Graceful error recovery
 
