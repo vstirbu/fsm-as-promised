@@ -184,6 +184,27 @@ StateMachine({
 target.jump();
 ```
 
+### Custom error handler
+
+You can override the default library error handler by setting the `error` property:
+
+```javascript
+var fsm = StateMachine({
+  initial: 'red',
+  events: [
+    { name: 'red', from: 'green', to: 'red' }
+  ],
+  error: function customErrorHandler(msg, options) {
+    throw new Error('my error');
+  }
+});
+```
+
+The value of the `error` property is a function that expects two arguments:
+
+* _msg_ a string containing the error reason
+* _options_ an object havin as properties the `name` of the transition and the `from` state when the error occured.  
+
 ## Callbacks
 
 ### Arguments

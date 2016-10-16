@@ -1,8 +1,26 @@
 module.exports = function (promise) {
   StateMachine.Promise = promise;
 
-  describe('Graceful error recovery', function () {
+  describe('Cusstom error handler', function () {
+    it('should throw custom error', function(done) {
+      var fsm = StateMachine({
+        initial: 'red',
+        events: [
+          { name: 'red', from: 'green', to: 'red' }
+        ],
+        error: function(msg, options) {
+          throw new Error('my error');
+        }
+      });
 
+      fsm.red().catch(function (err) {
+        expect(err.message).to.be.equal('my error');
+        done();
+      });
+    });
+  });
+  
+  describe('Graceful error recovery', function () {
     it('should recover from error in sync callback and continue transition', function (done) {
       StateMachine.Promise = promise;
   

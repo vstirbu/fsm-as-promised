@@ -1,10 +1,9 @@
 var EventEmitter = require('events').EventEmitter;
 
-Object.keys(promises)
-  .forEach(function (promise) {
-    StateMachine.Promise = promises[promise];
+module.exports = function (promise) {
+    StateMachine.Promise = promise;
 
-    describe('Event emitter: ' + promise, function () {
+    describe('Event emitter: ', function () {
 
       it('should emit events (new object)', function (done) {
         var states = [];
@@ -103,4 +102,4 @@ Object.keys(promises)
       });
 
     });
-  });
+  };

@@ -1,3 +1,8 @@
+# 0.14.0 / 2016-10-16
+
+* custom error handler ([@yarandoo](https://github.com/yarandoo))
+* added emitter tests to runner
+
 # 0.13.2 / 2016-09-30
 
 * upgraded lodash and stampit dependencies
