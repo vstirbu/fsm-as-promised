@@ -1,4 +1,5 @@
 /*jshint -W030 */
+var sinon = require('sinon');
 module.exports = function (promise) {
   describe('Basic operations', function () {
 
@@ -309,6 +310,25 @@ module.exports = function (promise) {
       fsm.walk().then(function () {
         expect(called).to.be.deep.equal(['leavehere', 'leave', 'walk', 'enterhere', 'enter', 'enteredhere','entered']);
 
+        done();
+      });
+    });
+
+    it('should call callbacks with the value of "this" set to the state machine', function (done) {
+      StateMachine.Promise = promise;
+      const onWarnSpy = sinon.spy();
+      var fsm = StateMachine({
+        initial: 'green',
+        events: [
+          { name: 'warn',  from: 'green',  to: 'yellow' }
+        ],
+        callbacks: {
+          onwarn: onWarnSpy,
+        }
+      });
+
+      fsm.warn().then(function () {
+        expect(onWarnSpy.thisValues[0]).to.eql(fsm);
         done();
       });
     });

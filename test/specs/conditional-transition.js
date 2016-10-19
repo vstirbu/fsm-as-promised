@@ -1,5 +1,6 @@
 /* global expect */
 /* global StateMachine */
+var sinon = require('sinon');
 module.exports = function (promise) {
   StateMachine.Promise = promise;
 
@@ -12,13 +13,13 @@ module.exports = function (promise) {
           { name: 'start', from: 'init', to: ['a', 'b'], condition: function () {} }
         ]
       });
-      
+
       expect(fsm.current).to.be.equal('init');
       expect(fsm.hasState('init__start')).to.be.true;
       expect(fsm).to.have.ownProperty('init__start--a');
       expect(fsm).to.have.ownProperty('init__start--b');
       expect(fsm).to.have.ownProperty('init__start--no-choice');
-      
+
       done();
     });
 
@@ -102,19 +103,19 @@ module.exports = function (promise) {
             var promise = new StateMachine.Promise(function (resolve, reject) {
               resolve(0);
             });
-            
+
             return promise;
           } }
         ]
       });
-      
+
       fsm.start().then(function () {
         expect(fsm.current).to.be.equal('a');
-      
+
         done();
       });
     });
-    
+
     it('should transition from multiple states', function (done) {
       var fsm = StateMachine({
         initial: 'init',
@@ -124,14 +125,28 @@ module.exports = function (promise) {
           } }
         ]
       });
-      
+
       fsm.start().then(function () {
         expect(fsm.current).to.be.equal('b');
-      
+
         done();
       });
     });
-    
+
+    it('should receive the state machine object as the value of "this" ', function (done) {
+      const conditionStub = sinon.stub().returns(1);
+      var fsm = StateMachine({
+        initial: 'init',
+        events: [
+          { name: 'start', from: 'init', to: ['a', 'b'], condition: conditionStub }
+        ],
+      });
+      fsm.start('test').then(function () {
+        expect(conditionStub.thisValues[0]).to.eql(fsm);
+        done();
+      });
+    });
+
     it('should receive original options object', function (done) {
       var fsm = StateMachine({
         initial: 'init',
@@ -165,12 +180,12 @@ module.exports = function (promise) {
           }
         }
       });
-      
+
       fsm.start('test').then(function () {
         done();
       });
     });
-    
+
     it('should receive response set in choice transition callback', function (done) {
       var fsm = StateMachine({
         initial: 'init',
@@ -198,13 +213,13 @@ module.exports = function (promise) {
           }
         }
       });
-      
+
       fsm.start().then(function (result) {
         expect(result).to.be.equal('xyz');
         done();
       });
     });
-    
+
     it('should clear response cache before run', function (done) {
       var fsm = StateMachine({
         initial: 'init',
@@ -222,7 +237,7 @@ module.exports = function (promise) {
           }
         }
       });
-      
+
       fsm.start().then(function (result) {
         expect(result).to.be.equal('start');
         fsm.start().then(function (result) {
@@ -231,7 +246,7 @@ module.exports = function (promise) {
         });
       });
     });
-    
+
     it('should throw error when out of choice index', function (done) {
       var fsm = StateMachine({
         initial: 'init',
@@ -241,14 +256,14 @@ module.exports = function (promise) {
           } }
         ]
       });
-      
+
       fsm.start().catch(function (err) {
         expect(err.message).to.be.equal('Choice index out of range');
         expect(fsm.current).to.be.equal('init');
-      
+
         done();
       });
     });
   });
-  
+
 }
