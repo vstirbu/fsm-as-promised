@@ -1,3 +1,7 @@
+# 0.14.1 / 2016-10-20
+
+* bind condition function to `target` ([@yarandoo](https://github.com/yarandoo))
+
 # 0.14.0 / 2016-10-16
 
 * custom error handler ([@yarandoo](https://github.com/yarandoo))
