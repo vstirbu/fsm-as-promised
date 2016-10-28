@@ -1,3 +1,8 @@
+# 0.14.2 / 2016-10-28
+
+* conditional pseudo states are silent and do not emit events or call `onenter` and `onentered`
+* document event emiter functionality
+
 # 0.14.1 / 2016-10-20
 
 * bind condition function to `target` ([@yarandoo](https://github.com/yarandoo))

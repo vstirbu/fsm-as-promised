@@ -35,6 +35,7 @@ A minimalistic finite state machine library for browser and node implemented usi
     - [Beyond the library boundary](#beyond-the-library-boundary)
   - [Configuring callback prefix](#configuring-callback-prefix)
 - [Common Methods](#common-methods)
+- [Emitted Events](#emitted-events)
 - [Handling Errors](#handling-errors)
   - [Graceful error recovery](#graceful-error-recovery)
 - [Recipes](#recipes)
@@ -383,6 +384,12 @@ The library adds the following utilities to the finite state machine object:
 * `isFinal(state)` checks if the _state_ is final state. If no state is provided the current state is checked. 
 * `hasState(state)` checks if the finite state machine has the _state_.
 
+## Emitted Events
+
+The finite state machine object is an `EventEmitter`. By defult, the library emits `state` event whenever the state machine enters a new state.
+
+You can define and emit new events.
+
 ## Handling Errors
 
 Errors thrown by any of the callbacks called during a transition are propagated through the promise chain and can be handled like this:
@@ -498,7 +505,7 @@ StateMachine({
 });
 ```
 
-The condition callback must return the `to` Array's index of the selected state, the name of the selected state, or a promise which resolves to either.  The condition callback is executed after `on{eventName}` callback.
+The condition callback must return the `to` Array's index of the selected state, the name of the selected state, or a promise which resolves to either.  The condition callback is executed after `on{eventName}` callback. 
 
 If the above is not suitable, complex conditional transitions can be achieved through transitioning explicitly to a pseudo state where the condition is checked, then the appropriate event is triggered:
 
