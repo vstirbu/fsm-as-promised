@@ -264,6 +264,34 @@ module.exports = function (promise) {
         done();
       });
     });
-  });
 
+    it('should not call `onenter` and `onentered` in pseudo state', function (done) {
+      var enterCalled = [];
+      var enteredCalled = [];
+
+      var fsm = StateMachine({
+        initial: 'init',
+        events: [
+          { name: 'start', from: 'init', to: ['a', 'b'], condition: function (options) {
+            return 0;
+          } }
+        ],
+        callbacks: {
+          onenter: function (options) {
+            enterCalled.push(options.to);
+          },
+          onentered: function (options) {
+            enteredCalled.push(options.to);
+          }
+        }
+      });
+
+      fsm.start().then(function () {
+        expect(enterCalled).to.be.deep.equal(['a']);
+        expect(enteredCalled).to.be.deep.equal(['a']);
+
+        done();
+      }).catch(done);
+    });
+  });
 }

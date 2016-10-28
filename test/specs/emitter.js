@@ -101,5 +101,26 @@ module.exports = function (promise) {
           });
       });
 
+      it('should not emit `state` event for pseudo states', function (done) {
+        var states = [];
+
+        var fsm = StateMachine({
+          initial: 'init',
+          events: [
+            { name: 'start', from: 'init', to: ['a', 'b'], condition: function (options) {
+              return 0;
+            } }
+          ]
+        });
+
+        fsm.on('state', function (state) {
+          states.push(state);
+        });
+
+        fsm.start().then(function () {
+          expect(states).to.be.deep.equal(['a']);
+          done();
+        }).catch(done);
+      });
     });
   };
