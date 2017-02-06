@@ -1,4 +1,5 @@
 module.exports = function (promise) {
+  var _ = require('lodash');
 
   describe('Transitions', function () {
 
@@ -103,7 +104,7 @@ module.exports = function (promise) {
             callbacks: {
               ontwo: function (options) {
                 fsm.three().catch(function (err) {
-                  expect(err.message).to.be.equal('Previous transition pending');
+                  expect(err.message).to.be.equal('Previous inter-state transition started');
                   expect(err.trigger).to.be.equal('three');
                   expect(err.current).to.be.equal('here');
                   done();
@@ -130,6 +131,8 @@ module.exports = function (promise) {
                   expect(err.message).to.be.equal('Previous transition pending');
                   expect(err.trigger).to.be.equal('two');
                   expect(err.current).to.be.equal('here');
+                  expect(err.pending).to.exist;
+                  expect(_.size(err.pending)).to.equal(1);
                   done();
                 });
               }
