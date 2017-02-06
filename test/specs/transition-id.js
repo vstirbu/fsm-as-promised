@@ -1,7 +1,7 @@
 module.exports = function (promise) {
   StateMachine.Promise = promise;
 
-  describe.only('Transition ID', function () {
+  describe('Transition ID', function () {
     it('should exist for inter state transitions', function (done) {
       var fsm = StateMachine({
         initial: 'here',
@@ -53,13 +53,12 @@ module.exports = function (promise) {
         }
       });
 
+      fsm.jump();
       fsm.jump().then(function () {
-        fsm.jump().then(function () {
-          expect(ids).to.have.length(2);
-          expect(ids[0] !== ids[1]).to.be.true;
+        expect(ids).to.have.length(2);
+        expect(ids[0] !== ids[1]).to.be.true;
 
-          done();
-        });
+        done();
       });
     });
   });
