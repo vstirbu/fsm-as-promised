@@ -1,3 +1,9 @@
+# 0.14.3 / 2017-02-07
+
+* improved error reporting:
+  * `Previous transition pending` error thrown when one or more intr-state tansitions pending, includes also the details of the pending transitions
+  * `Previous inter-state transition start` error when another inter-state transition has already started.
+
 # 0.14.2 / 2016-10-28
 
 * conditional pseudo states are silent and do not emit events or call `onenter` and `onentered`

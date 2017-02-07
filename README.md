@@ -400,6 +400,7 @@ fsm.jump().catch(function (err) {
   // err.trigger - the event that triggered the error
   // err.current - the current state of the state machine
   // err.message - described bellow...
+  // err.pending - an object containing the description of intra-state pending transitions
 });
 ```
 
@@ -408,7 +409,8 @@ The library throws errors with the following messages:
 | message | explanation | note |
 | --- | --- | --- |
 | Ambigous transition | The state machine has one transition that starts from one state and ends in multiple | must be fixed during design time |
-| Previous transition pending | The previous transition is in progress preventing new ones until it has completed | - |
+| Previous transition pending | The previous intra-state transition(s) is in progress preventing new ones until it has completed | - |
+| Previous inter-state transition started | Inter-state transition started | - |
 | Invalid event in current state | The state machine is in a state that does not allow the requested transition | - |
 
 :warning: Unhandled errors may lead to inconsistent state machine. If you reserved resurces as part of a transition, you have to release them if an error occured.
