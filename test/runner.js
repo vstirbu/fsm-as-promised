@@ -13,6 +13,7 @@ var conditionalTransition =  require('./specs/conditional-transition');
 var final =  require('./specs/final');
 var callbackPrefix = require('./specs/callback-prefix');
 var emitter = require('./specs/emitter');
+var transitionId = require('./specs/transition-id');
 
 var promises = {
   Default: defaultPromise,
@@ -40,5 +41,6 @@ Object.keys(promises).forEach(function (promise) {
     final(promises[promise]);
     callbackPrefix(promises[promise]);
     emitter(promises[promise]);
+    transitionId(promises[promise]);
   });
 });

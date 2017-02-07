@@ -28,7 +28,8 @@
   "dependencies": {
     "es6-promise": "^4.0.2",
     "lodash": "^4.16.2",
-    "stampit": "^3.0.1"
+    "stampit": "^3.0.1",
+    "uuid": "^3.0.1"
   },
   "devDependencies": {
     "bluebird": "^3.4.1",
