@@ -386,7 +386,7 @@ The library adds the following utilities to the finite state machine object:
 
 ## Emitted Events
 
-The finite state machine object is an `EventEmitter`. By defult, the library emits `state` event whenever the state machine enters a new state.
+The finite state machine object is an `EventEmitter`. By default, the library emits `state` event whenever the state machine enters a new state.
 
 You can define and emit new events.
 
