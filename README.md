@@ -7,8 +7,10 @@ A minimalistic finite state machine library for browser and node implemented usi
 [![Build Status](https://travis-ci.org/vstirbu/fsm-as-promised.svg?branch=master)](https://travis-ci.org/vstirbu/fsm-as-promised)
 [![Coverage Status](https://coveralls.io/repos/vstirbu/fsm-as-promised/badge.svg?branch=master&service=github)](https://coveralls.io/github/vstirbu/fsm-as-promised?branch=master)
 [![Code Climate](https://codeclimate.com/github/vstirbu/fsm-as-promised/badges/gpa.svg)](https://codeclimate.com/github/vstirbu/fsm-as-promised)
+[![Greenkeeper badge](https://badges.greenkeeper.io/vstirbu/fsm-as-promised.svg)](https://greenkeeper.io/)
 [![Known Vulnerabilities](https://snyk.io/test/github/vstirbu/fsm-as-promised/90f8f3e9021c20c4bcd4a6719385d2df687d2ac2/badge.svg)](https://snyk.io/test/github/vstirbu/fsm-as-promised/90f8f3e9021c20c4bcd4a6719385d2df687d2ac2)
 [![NPM Downloads](https://img.shields.io/npm/dm/fsm-as-promised.svg)](https://www.npmjs.com/package/fsm-as-promised)
+
 [![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/vstirbu/fsm-as-promised?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
 
 
