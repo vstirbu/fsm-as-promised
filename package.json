@@ -33,7 +33,7 @@
   },
   "devDependencies": {
     "bluebird": "^3.4.1",
-    "chai": "^3.4.1",
+    "chai": "^4.0.0",
     "es6-shim": "^0.35.1",
     "lie": "^3.0.4",
     "mocha": "^3.1.0",
