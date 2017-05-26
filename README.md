@@ -47,6 +47,8 @@ A minimalistic finite state machine library for browser and node implemented usi
 
 ## How to use
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/vstirbu/fsm-as-promised.svg)](https://greenkeeper.io/)
+
 ### Installation and Setup
 
 #### In node
