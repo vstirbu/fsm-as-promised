@@ -1,3 +1,7 @@
+# 0.14.4 / 2017-06-20
+
+* gracefully handle invalid (initial) state (reported in #65)
+
 # 0.14.3 / 2017-02-07
 
 * improved error reporting:
