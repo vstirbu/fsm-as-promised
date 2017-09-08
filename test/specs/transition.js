@@ -91,6 +91,32 @@ module.exports = function (promise) {
       fsm.two();
     });
 
+    it('should throw error on inter when previous inter transition started', function (done) {
+      var fsm = StateMachine({
+        initial: 'here',
+        events: [
+          { name: 'jump', from: 'here', to: 'sky' },
+          { name: 'run',  from: 'here', to: 'office' },
+        ],
+        callbacks: {
+          onjump: function (options) {
+            return new Promise(function (resolve, reject) {
+              resolve(options);
+            });
+          }
+        }
+      });
+    
+      fsm.jump();
+      
+      fsm.run().catch((err) => {
+        expect(err.message).to.be.equal('Previous inter-state transition started');
+        expect(err.trigger).to.be.equal('run');
+        expect(err.current).to.be.equal('here');
+        done();
+      });
+    });
+
     it('should throw error on inter when previous inter transition not completed', function (done) {
       StateMachine.Promise = promise;
 
