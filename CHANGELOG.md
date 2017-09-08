@@ -1,3 +1,7 @@
+# 0.14.5 / 2017-09-08
+
+* proper handling of subsequent inter state transitions (reported in #70)
+
 # 0.14.4 / 2017-06-20
 
 * gracefully handle invalid (initial) state (reported in #65)
