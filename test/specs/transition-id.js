@@ -2,7 +2,7 @@ module.exports = function (promise) {
   StateMachine.Promise = promise;
 
   describe('Transition ID', function () {
-    it('should exist for inter state transitions', function (done) {
+    it('should exist for intra state transitions', function (done) {
       var fsm = StateMachine({
         initial: 'here',
         events: [
