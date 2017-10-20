@@ -1,3 +1,7 @@
+# 0.15.0 / 2017-10-20
+
+* added intellisense type checking support
+
 # 0.14.5 / 2017-09-08
 
 * proper handling of subsequent inter state transitions (reported in #70)
