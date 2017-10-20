@@ -1,3 +1,7 @@
+# 0.15.1 / 2017-10-20
+
+* set `final` configuration option type checking to optional
+
 # 0.15.0 / 2017-10-20
 
 * added intellisense type checking support
