@@ -21,6 +21,7 @@
     "test": "test"
   },
   "scripts": {
+    "doctoc": "doctoc README.md",
     "test": "mocha",
     "test-cov": "istanbul cover _mocha -- -R spec --check-leaks",
     "test-travis": "istanbul cover _mocha --report lcovonly -- --reporter dot"
@@ -36,6 +37,7 @@
     "bluebird": "^3.5.1",
     "chai": "^4.1.2",
     "chai-as-typed": "^0.1.0",
+    "doctoc": "^1.3.0",
     "es6-shim": "^0.35.3",
     "lie": "^3.1.1",
     "mocha": "^4.0.0",

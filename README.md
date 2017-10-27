@@ -13,6 +13,9 @@ A minimalistic finite state machine library for browser and node implemented usi
 
 [![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/vstirbu/fsm-as-promised?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
 
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+
 
 - [How to use](#how-to-use)
   - [Installation and Setup](#installation-and-setup)
@@ -48,6 +51,8 @@ A minimalistic finite state machine library for browser and node implemented usi
 - [Contributing](#contributing)
 - [License](#license)
 - [Credits](#credits)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
 ## How to use
 
