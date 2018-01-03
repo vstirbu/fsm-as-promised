@@ -52,5 +52,10 @@
   },
   "engines": {
     "node": ">=4"
+  },
+  "greenkeeper": {
+    "ignore": [
+      "@types/node"
+    ]
   }
 }
