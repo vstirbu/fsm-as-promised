@@ -46,6 +46,7 @@ A minimalistic finite state machine library for browser and node implemented usi
 - [Recipes](#recipes)
   - [Conditional transitions](#conditional-transitions)
 - [Tooling](#tooling)
+  - [Visual Studio Code extension](#visual-studio-code-extension)
   - [Intellisense](#intellisense)
   - [UML visualization](#uml-visualization)
 - [Contributing](#contributing)
@@ -542,6 +543,10 @@ StateMachine({
 If your pseudo state's callback returns a Promise, you must return the call to the event function; e.g. `return this.triggerOptionA()`.
 
 ## Tooling
+
+### Visual Studio Code extension
+
+You can visualize the state machine as a UML diagram in vscode using the [Finite state machine viewer](https://marketplace.visualstudio.com/items?itemName=vstirbu.fsm-viewer) extension.
 
 ### Intellisense
 
