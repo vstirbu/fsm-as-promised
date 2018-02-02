@@ -13,6 +13,8 @@ A minimalistic finite state machine library for browser and node implemented usi
 
 [![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/vstirbu/fsm-as-promised?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
 
+:loudspeaker: For Visual Studio Code users: checkout the UML visualization [extension](https://marketplace.visualstudio.com/items?itemName=vstirbu.fsm-viewer).
+
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 
