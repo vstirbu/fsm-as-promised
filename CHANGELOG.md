@@ -1,3 +1,8 @@
+# unreleased
+
+* added instanceId to fsm object
+* handle only `Invalid event in current state` thrown by own instance
+
 # 0.15.1 / 2017-10-20
 
 * set `final` configuration option type checking to optional

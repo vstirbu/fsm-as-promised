@@ -12,7 +12,6 @@ module.exports = function (promise) {
         });
 
       return fsm.warn().catch(err => {
-        console.log(err);
         expect(err.message).to.equal('Invalid event in current state');
       });
     });

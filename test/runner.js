@@ -15,6 +15,7 @@ var callbackPrefix = require('./specs/callback-prefix');
 var emitter = require('./specs/emitter');
 var transitionId = require('./specs/transition-id');
 var faultyFsm = require('./specs/faulty-fsm');
+var errorIsolation = require('./specs/error-isolation');
 
 var promises = {
   Default: defaultPromise,
@@ -44,5 +45,6 @@ Object.keys(promises).forEach(function (promise) {
     emitter(promises[promise]);
     transitionId(promises[promise]);
     faultyFsm(promises[promise]);
+    errorIsolation(promises[promise]);
   });
 });
