@@ -10,7 +10,7 @@ module.exports = function (promise) {
             { name: 'clear', from: 'yellow', to: 'green' }
           ]
         });
-      
+
       return fsm.warn().catch(err => {
         expect(err.message).to.equal('Invalid event in current state');
       });
