@@ -1,6 +1,8 @@
 # unreleased
 
-* added instanceId to fsm object
+# 0.16.0 / 2018-02-13
+
+* added instanceId method to fsm object
 * handle only `Invalid event in current state` thrown by own instance
 
 # 0.15.1 / 2017-10-20

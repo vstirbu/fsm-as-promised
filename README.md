@@ -395,6 +395,7 @@ The library adds the following utilities to the finite state machine object:
 * `is(state)` checks if the _state_ is the current state,
 * `isFinal(state)` checks if the _state_ is final state. If no state is provided the current state is checked. 
 * `hasState(state)` checks if the finite state machine has the _state_.
+* `instanceId` returns the uuid of the instance
 
 ## Emitted Events
 
