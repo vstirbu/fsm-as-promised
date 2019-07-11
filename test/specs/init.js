@@ -29,6 +29,21 @@ module.exports = function (promise) {
       expect(fsm.current).to.be.equal('green');
     });
 
+    it('should accept an Object for events property', function () {
+      StateMachine.Promise = promise;
+
+      var fsm = StateMachine({
+        events: {
+          start: {
+            from: 'one',
+            to: 'another'
+          }
+        }
+      });
+
+      expect(fsm.start).to.be.a('function');
+    });
+
     it('should throw error on transition with array value for \'to\'', function (done) {
       StateMachine.Promise = promise;
 
