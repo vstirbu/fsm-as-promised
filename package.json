@@ -24,13 +24,16 @@
     "doctoc": "doctoc README.md",
     "test": "mocha",
     "test-cov": "istanbul cover _mocha -- -R spec --check-leaks",
-    "test-travis": "istanbul cover _mocha --report lcovonly -- --reporter dot"
+    "test-travis": "istanbul cover _mocha --report lcovonly -- --reporter dot",
+    "snyk-protect": "snyk protect",
+    "prepublish": "npm run snyk-protect"
   },
   "dependencies": {
     "es6-promise": "^4.2.1",
     "lodash": "^4.17.4",
     "stampit": "^4.0.1",
-    "uuid": "^3.1.0"
+    "uuid": "^3.1.0",
+    "snyk": "^1.319.1"
   },
   "devDependencies": {
     "@types/node": "^8.5.2",
@@ -57,5 +60,6 @@
     "ignore": [
       "@types/node"
     ]
-  }
+  },
+  "snyk": true
 }
