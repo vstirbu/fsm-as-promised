@@ -1,0 +1,29 @@
+name: Test on Pull Request
+
+on:
+  pull_request:
+    types:
+      - opened
+      - synchronize
+      - reopened
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: checkout
+        uses: actions/checkout@v2
+
+      - name: node
+        uses: actions/setup-node@v1
+        with:
+          node-version: 12
+
+      - name: install
+        run: |
+          npm install
+
+      - name: test
+        run: |
+          npm test

@@ -1,1 +1,10 @@
 .github
+test
+_config.yml
+.editorconfig
+.npmignore
+.mocharc.json
+.prettierrc
+.travis.yml
+fsm-as-promised.png
+
