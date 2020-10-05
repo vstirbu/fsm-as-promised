@@ -1,14 +1,10 @@
 module.exports = function (promise) {
-
   describe('Initialisation', function () {
-
     it('should default to "none" state', function () {
       StateMachine.Promise = promise;
 
       var fsm = StateMachine({
-        events: [
-          { name: 'start', from: 'one', to: 'another' }
-        ]
+        events: [{ name: 'start', from: 'one', to: 'another' }],
       });
 
       expect(fsm.current).to.be.equal('none');
@@ -20,24 +16,23 @@ module.exports = function (promise) {
       var fsm = StateMachine({
         initial: 'green',
         events: [
-          { name: 'warn',  from: 'green',  to: 'yellow' },
-          { name: 'panic', from: 'yellow', to: 'red'    },
-          { name: 'calm',  from: 'red',    to: 'yellow' },
-          { name: 'clear', from: 'yellow', to: 'green'  }
-      ]});
+          { name: 'warn', from: 'green', to: 'yellow' },
+          { name: 'panic', from: 'yellow', to: 'red' },
+          { name: 'calm', from: 'red', to: 'yellow' },
+          { name: 'clear', from: 'yellow', to: 'green' },
+        ],
+      });
 
       expect(fsm.current).to.be.equal('green');
     });
 
-    it('should throw error on transition with array value for \'to\'', function (done) {
+    it("should throw error on transition with array value for 'to'", function (done) {
       StateMachine.Promise = promise;
 
       try {
         var fsm = StateMachine({
           initial: 'here',
-          events: [
-            { name: 'jump', from: 'here', to: ['here', 'there'] }
-          ]
+          events: [{ name: 'jump', from: 'here', to: ['here', 'there'] }],
         });
       } catch (e) {
         expect(e.message).to.be.equal('Ambigous transition');
@@ -50,20 +45,18 @@ module.exports = function (promise) {
 
     it('should use the configured promise library', function (done) {
       StateMachine.Promise = promise;
-      
+
       var usedPromise = StateMachine.Promise;
 
       var fsm = StateMachine({
         initial: 'init',
-        events: [
-          { name: 'test', from: 'init' }
-        ],
+        events: [{ name: 'test', from: 'init' }],
         callbacks: {
           ontest: function (options) {
             expect(usedPromise).to.be.deep.equal(promise);
             expect(StateMachine.Promise).to.be.deep.equal(promise);
-          }
-        }
+          },
+        },
       });
 
       fsm.test().then(function () {
@@ -71,4 +64,4 @@ module.exports = function (promise) {
       });
     });
   });
-}
+};

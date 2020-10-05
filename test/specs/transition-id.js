@@ -5,14 +5,12 @@ module.exports = function (promise) {
     it('should exist for intra state transitions', function (done) {
       var fsm = StateMachine({
         initial: 'here',
-        events: [
-          { name: 'jump', from: 'here' }
-        ],
+        events: [{ name: 'jump', from: 'here' }],
         callbacks: {
           onjump: function (options) {
             expect(options.id).to.exist;
-          }
-        }
+          },
+        },
       });
 
       fsm.jump().then(function () {
@@ -23,14 +21,12 @@ module.exports = function (promise) {
     it('should not exist for inter state transitions', function (done) {
       var fsm = StateMachine({
         initial: 'here',
-        events: [
-          { name: 'jump', from: 'here', to: 'there' }
-        ],
+        events: [{ name: 'jump', from: 'here', to: 'there' }],
         callbacks: {
           onjump: function (options) {
             expect(options.id).to.be.undefined;
-          }
-        }
+          },
+        },
       });
 
       fsm.jump().then(function () {
@@ -43,14 +39,12 @@ module.exports = function (promise) {
 
       var fsm = StateMachine({
         initial: 'here',
-        events: [
-          { name: 'jump', from: 'here' }
-        ],
+        events: [{ name: 'jump', from: 'here' }],
         callbacks: {
-          onjump: function(options) {
+          onjump: function (options) {
             ids.push(options.id);
-          }
-        }
+          },
+        },
       });
 
       fsm.jump();
@@ -62,4 +56,4 @@ module.exports = function (promise) {
       });
     });
   });
-}
+};

@@ -5,13 +5,17 @@ module.exports = function (promise) {
   StateMachine.Promise = promise;
 
   describe('Conditional transition', function () {
-
     it('should initialize state machine', function (done) {
       var fsm = StateMachine({
         initial: 'init',
         events: [
-          { name: 'start', from: 'init', to: ['a', 'b'], condition: function () {} }
-        ]
+          {
+            name: 'start',
+            from: 'init',
+            to: ['a', 'b'],
+            condition: function () {},
+          },
+        ],
       });
 
       expect(fsm.current).to.be.equal('init');
@@ -23,15 +27,20 @@ module.exports = function (promise) {
       done();
     });
 
-    describe('when the condition callback returns a numeric index', function() {
+    describe('when the condition callback returns a numeric index', function () {
       it('should transition to first choice', function (done) {
         var fsm = StateMachine({
           initial: 'init',
           events: [
-            { name: 'start', from: 'init', to: ['a', 'b'], condition: function (options) {
-              return 0;
-            } }
-          ]
+            {
+              name: 'start',
+              from: 'init',
+              to: ['a', 'b'],
+              condition: function (options) {
+                return 0;
+              },
+            },
+          ],
         });
 
         fsm.start().then(function () {
@@ -45,10 +54,15 @@ module.exports = function (promise) {
         var fsm = StateMachine({
           initial: 'init',
           events: [
-            { name: 'start', from: 'init', to: ['a', 'b'], condition: function (options) {
-              return 1;
-            } }
-          ]
+            {
+              name: 'start',
+              from: 'init',
+              to: ['a', 'b'],
+              condition: function (options) {
+                return 1;
+              },
+            },
+          ],
         });
 
         fsm.start().then(function () {
@@ -59,15 +73,20 @@ module.exports = function (promise) {
       });
     });
 
-    describe('when the condition callback returns a state name', function() {
+    describe('when the condition callback returns a state name', function () {
       it('should transition to first choice', function (done) {
         var fsm = StateMachine({
           initial: 'init',
           events: [
-            { name: 'start', from: 'init', to: ['a', 'b'], condition: function (options) {
-              return 'a';
-            } }
-          ]
+            {
+              name: 'start',
+              from: 'init',
+              to: ['a', 'b'],
+              condition: function (options) {
+                return 'a';
+              },
+            },
+          ],
         });
 
         fsm.start().then(function () {
@@ -81,10 +100,15 @@ module.exports = function (promise) {
         var fsm = StateMachine({
           initial: 'init',
           events: [
-            { name: 'start', from: 'init', to: ['a', 'b'], condition: function (options) {
-              return 'b';
-            } }
-          ]
+            {
+              name: 'start',
+              from: 'init',
+              to: ['a', 'b'],
+              condition: function (options) {
+                return 'b';
+              },
+            },
+          ],
         });
 
         fsm.start().then(function () {
@@ -99,14 +123,22 @@ module.exports = function (promise) {
       var fsm = StateMachine({
         initial: 'init',
         events: [
-          { name: 'start', from: 'init', to: ['a', 'b'], condition: function (options) {
-            var promise = new StateMachine.Promise(function (resolve, reject) {
-              resolve(0);
-            });
+          {
+            name: 'start',
+            from: 'init',
+            to: ['a', 'b'],
+            condition: function (options) {
+              var promise = new StateMachine.Promise(function (
+                resolve,
+                reject
+              ) {
+                resolve(0);
+              });
 
-            return promise;
-          } }
-        ]
+              return promise;
+            },
+          },
+        ],
       });
 
       fsm.start().then(function () {
@@ -120,10 +152,15 @@ module.exports = function (promise) {
       var fsm = StateMachine({
         initial: 'init',
         events: [
-          { name: 'start', from: ['init', 'other'], to: ['a', 'b'], condition: function (options) {
-            return 1;
-          } }
-        ]
+          {
+            name: 'start',
+            from: ['init', 'other'],
+            to: ['a', 'b'],
+            condition: function (options) {
+              return 1;
+            },
+          },
+        ],
       });
 
       fsm.start().then(function () {
@@ -138,7 +175,12 @@ module.exports = function (promise) {
       var fsm = StateMachine({
         initial: 'init',
         events: [
-          { name: 'start', from: 'init', to: ['a', 'b'], condition: conditionStub }
+          {
+            name: 'start',
+            from: 'init',
+            to: ['a', 'b'],
+            condition: conditionStub,
+          },
         ],
       });
       fsm.start('test').then(function () {
@@ -151,9 +193,14 @@ module.exports = function (promise) {
       var fsm = StateMachine({
         initial: 'init',
         events: [
-          { name: 'start', from: 'init', to: ['a', 'b'], condition: function (options) {
-            return 1;
-          } }
+          {
+            name: 'start',
+            from: 'init',
+            to: ['a', 'b'],
+            condition: function (options) {
+              return 1;
+            },
+          },
         ],
         callbacks: {
           onenter: function (opts) {
@@ -177,8 +224,8 @@ module.exports = function (promise) {
             expect(opts.from).to.be.equal('init');
             expect(opts.to).to.be.equal('b');
             expect(opts.args).to.be.deep.equal(['test']);
-          }
-        }
+          },
+        },
       });
 
       fsm.start('test').then(function () {
@@ -190,13 +237,16 @@ module.exports = function (promise) {
       var fsm = StateMachine({
         initial: 'init',
         events: [
-          { name: 'start', from: 'init', to: ['a', 'b'],
+          {
+            name: 'start',
+            from: 'init',
+            to: ['a', 'b'],
             condition: function (options) {
               expect(options.res).to.be.equal('start');
               options.res = 'abc';
               return 0;
-            }
-          }
+            },
+          },
         ],
         callbacks: {
           onstart: function (options) {
@@ -210,8 +260,8 @@ module.exports = function (promise) {
           onentereda: function (options) {
             expect(options.res).to.be.equal('123');
             options.res = 'xyz';
-          }
-        }
+          },
+        },
       });
 
       fsm.start().then(function (result) {
@@ -224,18 +274,21 @@ module.exports = function (promise) {
       var fsm = StateMachine({
         initial: 'init',
         events: [
-          { name: 'start', from: 'init', to: ['init', 'a'],
+          {
+            name: 'start',
+            from: 'init',
+            to: ['init', 'a'],
             condition: function () {
               return 0;
-            }
-          }
+            },
+          },
         ],
         callbacks: {
           onstart: function (options) {
             expect(options.res).to.be.undefined;
             options.res = 'start';
-          }
-        }
+          },
+        },
       });
 
       fsm.start().then(function (result) {
@@ -251,10 +304,15 @@ module.exports = function (promise) {
       var fsm = StateMachine({
         initial: 'init',
         events: [
-          { name: 'start', from: 'init', to: ['a', 'b'], condition: function (options) {
-            return 2;
-          } }
-        ]
+          {
+            name: 'start',
+            from: 'init',
+            to: ['a', 'b'],
+            condition: function (options) {
+              return 2;
+            },
+          },
+        ],
       });
 
       fsm.start().catch(function (err) {
@@ -272,9 +330,14 @@ module.exports = function (promise) {
       var fsm = StateMachine({
         initial: 'init',
         events: [
-          { name: 'start', from: 'init', to: ['a', 'b'], condition: function (options) {
-            return 0;
-          } }
+          {
+            name: 'start',
+            from: 'init',
+            to: ['a', 'b'],
+            condition: function (options) {
+              return 0;
+            },
+          },
         ],
         callbacks: {
           onenter: function (options) {
@@ -282,16 +345,19 @@ module.exports = function (promise) {
           },
           onentered: function (options) {
             enteredCalled.push(options.to);
-          }
-        }
+          },
+        },
       });
 
-      fsm.start().then(function () {
-        expect(enterCalled).to.be.deep.equal(['a']);
-        expect(enteredCalled).to.be.deep.equal(['a']);
+      fsm
+        .start()
+        .then(function () {
+          expect(enterCalled).to.be.deep.equal(['a']);
+          expect(enteredCalled).to.be.deep.equal(['a']);
 
-        done();
-      }).catch(done);
+          done();
+        })
+        .catch(done);
     });
   });
-}
+};
