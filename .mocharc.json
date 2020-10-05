@@ -1,0 +1,7 @@
+{
+  "diff": true,
+  "extension": [".js"],
+  "check-leaks": true,
+  "require": ["test/support/node.js"],
+  "file": ["test/runner.js"]
+}
