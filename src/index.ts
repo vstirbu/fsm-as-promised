@@ -5,21 +5,46 @@
  * Copyright © 2014-2018
  */
 
-'use strict';
+import { FsmError } from './fsm-error';
+import * as _ from 'lodash';
+import { EventEmitter } from 'events';
+import { v4 } from 'uuid';
+import stampit = require('stampit');
 
-const { FsmError } = require('./fsm-error');
-var stampit = require('stampit');
-var _ = require('lodash');
-var EventEmitter = require('events').EventEmitter;
-var uuid = require('uuid');
-
-var AssignFirstArgument = stampit({
+var AssignFirstArgumentStamp = stampit.compose({
   init: function init(opts) {
     Object.assign(this, opts);
   },
 });
 
-var StateMachine = stampit({
+interface EventSpecification {
+  name: string;
+  from: string | string[];
+  to: string | string[];
+  condition?(args: any[]): string | number;
+}
+
+interface StateMachineStamp extends EventEmitter {
+  current: string;
+  can(event: string): boolean;
+  cannot(event: string): boolean;
+  is(state: string): boolean;
+  isFinal(state: string): boolean;
+  hasState(state: string): boolean;
+  instanceId(): string;
+  (args: any[]): any;
+}
+
+interface StateMachineConfiguration {
+  initial: string;
+  final: string | string[];
+  events: EventSpecification[];
+  callbacks: {
+    [k: string]: Function;
+  };
+}
+
+var StateMachineStamp = stampit.compose<StateMachineStamp>({
   props: {
     // can be an object or an array
     events: [],
@@ -37,7 +62,7 @@ var StateMachine = stampit({
     FsmError: FsmError,
     callbackPrefix: 'on',
     noChoiceFound: 'no-choice',
-    type: function type(options) {
+    type: function type(options: { from: string; to: string }) {
       var Type = this.Type;
       if (options.from === options.to || _.isUndefined(options.to)) {
         return Type.NOOP;
@@ -51,10 +76,10 @@ var StateMachine = stampit({
       INTER: 1,
       GENERAL: 2,
     },
-    isConditional: function isConditional(event) {
+    isConditional: function isConditional(event: EventSpecification) {
       return _.isFunction(event.condition) && _.isArray(event.to);
     },
-    pseudoEvent: function pseudoEvent(state, name) {
+    pseudoEvent: function pseudoEvent(state: string, name: string) {
       return state + '--' + name;
     },
   },
@@ -173,7 +198,7 @@ var StateMachine = stampit({
       return options.res || options;
     },
     revert: function (options) {
-      return function revert(err) {
+      return function revert(err: Error) {
         var factory = this.factory;
         var Type = this.factory.Type;
         var instanceId = this.target.instanceId();
@@ -200,12 +225,12 @@ var StateMachine = stampit({
     addEvents: function addEvents(events) {
       _.forEach(
         events,
-        function (event) {
+        function (event: EventSpecification) {
           this.addEvent(event);
         }.bind(this)
       );
     },
-    addEvent: function addEvent(event) {
+    addEvent: function addEvent(event: EventSpecification) {
       this.events[event.name] = this.events[event.name] || {};
 
       //NOTE: Add the choice pseudo-state for conditional transition
@@ -214,7 +239,7 @@ var StateMachine = stampit({
       }
       this.addBasicEvent(event);
     },
-    addBasicEvent: function addBasicEvent(event) {
+    addBasicEvent: function addBasicEvent(event: EventSpecification) {
       if (_.isArray(event.to)) {
         this.error('Ambigous transition', event);
       }
@@ -223,13 +248,13 @@ var StateMachine = stampit({
 
       _.forEach(
         event.from,
-        function (from) {
+        function (from: string) {
           this.events[event.name][from] = event.to || from;
         }.bind(this)
       );
     },
     addConditionalEvent: function addConditionalEvent(event) {
-      var pseudoState;
+      var pseudoState: string;
       var factory = this.factory;
       var callbackPrefix = factory.callbackPrefix;
       var noChoiceFound = factory.noChoiceFound;
@@ -239,7 +264,7 @@ var StateMachine = stampit({
       if (_.isArray(event.from)) {
         return _.forEach(
           event.from,
-          function (from) {
+          function (from: string) {
             this.addConditionalEvent({
               name: event.name,
               from: from,
@@ -271,7 +296,7 @@ var StateMachine = stampit({
 
       _.forEach(
         event.to,
-        function (toState) {
+        function (toState: string) {
           this.addEvent({
             name: pseudoEvent(pseudoState, toState),
             from: pseudoState,
@@ -282,18 +307,23 @@ var StateMachine = stampit({
         }.bind(this)
       );
 
-      this.callbacks[callbackPrefix + 'entered' + pseudoState] = function (
-        options
-      ) {
+      this.callbacks[
+        callbackPrefix + 'entered' + pseudoState
+      ] = function (options: {
+        name: string;
+        from: string;
+        to: string;
+        args: any[];
+      }) {
         var target = this.target;
         _.defaults(options, {
           args: [],
         });
 
-        return new Promise(function (resolve) {
+        return new Promise(function (resolve: Function) {
           resolve(event.condition.call(target, options));
         }).then(
-          function (index) {
+          function (index: number) {
             var toState;
 
             if (_.isNumber(index)) {
@@ -318,7 +348,7 @@ var StateMachine = stampit({
     addState: function addState(state) {
       var states = this.states;
       state = [].concat(state || []);
-      state.forEach(function (name) {
+      state.forEach(function (name: string) {
         states[name] = states[name] || {
           noopTransitions: {},
         };
@@ -379,7 +409,13 @@ var StateMachine = stampit({
         var args = _.toArray(arguments);
         var current = this.current;
         var target = this.target;
-        var options = {
+        var options: {
+          name: string;
+          from: string;
+          to: string;
+          args: any[];
+          id?: string;
+        } = {
           name: name,
           from: current,
           to: events[name][current],
@@ -389,7 +425,7 @@ var StateMachine = stampit({
         var isPseudo = pseudoEvents[name];
 
         if (options.from === options.to) {
-          options.id = uuid.v4();
+          options.id = v4();
         }
 
         if (pseudoStates[options.to]) {
@@ -401,7 +437,7 @@ var StateMachine = stampit({
         }
 
         return (
-          new this.factory.Promise(function (resolve) {
+          new this.factory.Promise(function (resolve: Function) {
             resolve(options);
           })
             .then(this.isValidEvent.bind(this))
@@ -462,7 +498,7 @@ var StateMachine = stampit({
     },
     initTarget: function initTarget(target) {
       var mixin;
-      const id = uuid.v4();
+      const id = v4();
 
       if (!_.isObject(target)) {
         target = new EventEmitter();
@@ -476,7 +512,7 @@ var StateMachine = stampit({
 
       mixin = _.mapValues(
         this.events,
-        function (event, name) {
+        function (event: EventSpecification, name: string) {
           return this.buildEvent(name);
         }.bind(this)
       );
@@ -510,7 +546,7 @@ var StateMachine = stampit({
     this.events = {};
     _.forEach(
       events,
-      function (event, name) {
+      function (event: EventSpecification, name: string) {
         if (_.isString(name)) {
           event.name = name;
         }
@@ -529,25 +565,10 @@ var StateMachine = stampit({
   },
 });
 
-StateMachine = AssignFirstArgument.compose(StateMachine);
+const StateMachine = stampit
+  .compose(AssignFirstArgumentStamp)
+  .compose<StateMachineStamp>(StateMachineStamp);
 
-/**
- * @typedef {Object} Event
- * @prop {String} name - Transition name
- * @prop {String|String[]} from - Starting state
- * @prop {String|String[]} [to] - Ending state
- * @prop {Function} [condition] - Condition function
- */
+export default StateMachine;
 
-/**
- * @typedef {Object} StateMachineConfiguration
- * @prop {String} initial - Initial state
- * @prop {String|String[]} [final] - Final state(s)
- * @prop {Event[]} events - Events
- * @prop {Object<String, Function>} callbacks - Callbacks
- */
-
-/**
- * @type {function(StateMachineConfiguration, object)}
- */
-module.exports = StateMachine;
+const r = StateMachine({});

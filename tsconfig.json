@@ -4,7 +4,8 @@
     "module": "commonjs",
     "target": "es2017",
     "noImplicitAny": true,
-    "allowJs": true
+    "allowJs": true,
+    "declaration": true
   },
   "compileOnSave": true,
   "include": ["src"],
