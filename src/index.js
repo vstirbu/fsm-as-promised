@@ -7,7 +7,7 @@
 
 'use strict';
 
-var FsmError = require('./fsm-error');
+const { FsmError } = require('./fsm-error');
 var stampit = require('stampit');
 var _ = require('lodash');
 var EventEmitter = require('events').EventEmitter;
