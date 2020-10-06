@@ -2,29 +2,22 @@
  * @author Vlad Stirbu
  * @license MIT
  *
- * Copyright © 2014-2018
+ * Copyright © 2014-2020
  */
 
 import { FsmError } from './fsm-error';
 import * as _ from 'lodash';
 import { EventEmitter } from 'events';
 import { v4 } from 'uuid';
-import stampit = require('stampit');
+import * as stampit from 'stampit';
 
-var AssignFirstArgumentStamp = stampit.compose({
-  init: function init(opts) {
+const AssignFirstArgumentStamp = stampit.compose({
+  init: function init(opts: StateMachineConfiguration) {
     Object.assign(this, opts);
   },
 });
 
-interface EventSpecification {
-  name: string;
-  from: string | string[];
-  to: string | string[];
-  condition?(args: any[]): string | number;
-}
-
-interface StateMachineStamp extends EventEmitter {
+interface StateMachine extends EventEmitter {
   current: string;
   can(event: string): boolean;
   cannot(event: string): boolean;
@@ -32,19 +25,56 @@ interface StateMachineStamp extends EventEmitter {
   isFinal(state: string): boolean;
   hasState(state: string): boolean;
   instanceId(): string;
-  (args: any[]): any;
+  [k: string]: any;
+}
+
+interface EventSpecification {
+  name: string;
+  from: string | string[];
+  to: string | string[];
+  condition?: {
+    (args: any[]): string | number | Promise<string | number>;
+  };
+}
+
+interface CallbackOptions {
+  /**
+   * Event name
+   */
+  name: string;
+  from: string;
+  to: string;
+  /**
+   * Event arguments
+   */
+  args: any[];
+  /**
+   * Event returned value
+   */
+  res?: any;
 }
 
 interface StateMachineConfiguration {
   initial: string;
   final: string | string[];
   events: EventSpecification[];
-  callbacks: {
-    [k: string]: Function;
+  callbacks?: {
+    [k: string]: {
+      (options: CallbackOptions): void | Promise<void>;
+    };
+  };
+  error?: {
+    (
+      message: string,
+      options: {
+        name: string;
+        from: string;
+      }
+    ): Error;
   };
 }
 
-var StateMachineStamp = stampit.compose<StateMachineStamp>({
+const StateMachineStamp = stampit.compose<StateMachine>({
   props: {
     // can be an object or an array
     events: [],
@@ -164,8 +194,8 @@ var StateMachineStamp = stampit.compose<StateMachineStamp>({
     },
     // internal callbacks
     onenterstate: function onenterstate(options) {
-      var factory = this.factory;
-      var Type = this.factory.Type;
+      const factory = this.factory;
+      const Type = this.factory.Type;
 
       switch (factory.type(options)) {
         case Type.NOOP:
@@ -537,8 +567,11 @@ var StateMachineStamp = stampit.compose<StateMachineStamp>({
       return target;
     },
   },
-  init: function init(opts, context) {
-    this.factory = context.stamp;
+  init: function init(
+    opts,
+    { stamp, args }: { stamp: StateMachineConfiguration; args: any[] }
+  ) {
+    this.factory = stamp;
 
     this.states = {};
 
@@ -561,14 +594,18 @@ var StateMachineStamp = stampit.compose<StateMachineStamp>({
 
     this.current = this.initial;
     // return this.initTarget(_.first(context.args));
-    return this.initTarget(context.args[1]);
+    const target = this.initTarget(args[1]);
+
+    return target;
   },
 });
 
-const StateMachine = stampit
+interface StateMachineFactory {
+  (configuration: StateMachineConfiguration, target?: object): StateMachine;
+}
+
+const StateMachine: StateMachineFactory = stampit
   .compose(AssignFirstArgumentStamp)
-  .compose<StateMachineStamp>(StateMachineStamp);
+  .compose<StateMachine>(StateMachineStamp);
 
 export default StateMachine;
-
-const r = StateMachine({});

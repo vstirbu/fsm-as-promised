@@ -2,9 +2,8 @@
   "compilerOptions": {
     "outDir": "lib",
     "module": "commonjs",
-    "target": "es2017",
+    "target": "es2015",
     "noImplicitAny": true,
-    "allowJs": true,
     "declaration": true
   },
   "compileOnSave": true,

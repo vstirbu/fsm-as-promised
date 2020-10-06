@@ -1,10 +1,13 @@
 .github
+src
+
 test
 _config.yml
 .editorconfig
-.npmignore
 .mocharc.json
+.npmignore
+.nyc_output
 .prettierrc
-.travis.yml
 fsm-as-promised.png
+tsconfig.json
 
