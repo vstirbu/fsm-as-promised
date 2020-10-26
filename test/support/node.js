@@ -1,6 +1,6 @@
 /* global global, Promise */
 
-global.StateMachine = require('../..');
+global.StateMachine = require('../..').default;
 global.expect = require('chai').expect;
 
 try {
