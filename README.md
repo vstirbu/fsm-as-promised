@@ -21,8 +21,6 @@ A minimalistic finite state machine library for browser and node implemented usi
 
 - [How to use](#how-to-use)
   - [Installation and Setup](#installation-and-setup)
-    - [In node](#in-node)
-    - [In browser](#in-browser)
 - [Configuring promise library](#configuring-promise-library)
 - [Create finite state machine](#create-finite-state-machine)
   - [Define events](#define-events)
@@ -49,7 +47,6 @@ A minimalistic finite state machine library for browser and node implemented usi
   - [Conditional transitions](#conditional-transitions)
 - [Tooling](#tooling)
   - [Visual Studio Code extension](#visual-studio-code-extension)
-  - [Intellisense](#intellisense)
   - [UML visualization](#uml-visualization)
 - [Contributing](#contributing)
 - [License](#license)
@@ -61,17 +58,15 @@ A minimalistic finite state machine library for browser and node implemented usi
 
 ### Installation and Setup
 
-#### In node
-
 Run ```npm install fsm-as-promised``` to get up and running. Then:
 
 ```javascript
-var StateMachine = require('fsm-as-promised');
+// ES5
+const StateMachine = require('fsm-as-promised');
+
+// ES6
+import StateMachine from 'fsm-as-promised';
 ```
-
-#### In browser
-
-Use manually with [browserify](http://browserify.org) for now...
 
 ## Configuring promise library
 
@@ -99,7 +94,7 @@ The library works also with the promise implementation bundled with [es6-shim](h
 A state machine object can be created by providing a configuration object:
 
 ```javascript
-var fsm = StateMachine({
+const fsm = StateMachine({
   events: [
     { name: 'wait', from: 'here'},
     { name: 'jump', from: 'here', to: 'there' },
@@ -148,7 +143,7 @@ The state machine configuration can define callback functions that are invoked w
 You can define the initial state by setting the initial property:
 
 ```javascript
-var fsm = StateMachine({
+const fsm = StateMachine({
   initial: 'here',
   events: [
     { name: 'jump', from: 'here', to: 'there' }
@@ -166,7 +161,7 @@ otherwise the finite state machine's initial state is `none`.
 You can define the final state or states by setting the final property:
 
 ```javascript
-var fsm = StateMachine({
+const fsm = StateMachine({
   initial: 'here',
   final: 'there', //can be a string or array
   events: [
@@ -180,7 +175,7 @@ var fsm = StateMachine({
 An existing object can be augmented with a finite state machine:
 
 ```javascript
-var target = {
+const target = {
       key: 'value'
     };
 
@@ -204,7 +199,7 @@ target.jump();
 You can override the default library error handler by setting the `error` property:
 
 ```javascript
-var fsm = StateMachine({
+const fsm = StateMachine({
   initial: 'red',
   events: [
     { name: 'red', from: 'green', to: 'red' }
@@ -218,7 +213,7 @@ var fsm = StateMachine({
 The value of the `error` property is a function that expects two arguments:
 
 * _msg_ a string containing the error reason
-* _options_ an object havin as properties the `name` of the transition and the `from` state when the error occured.  
+* _options_ an object havin as properties the `name` of the transition and the `from` state when the error occurred.  
 
 ## Callbacks
 
@@ -227,7 +222,7 @@ The value of the `error` property is a function that expects two arguments:
 The following arguments are passed to the callbacks:
 
 ```javascript
-var fsm = StateMachine({
+const fsm = StateMachine({
     events: [
       { name: 'jump', from: 'here', to: 'there' }
     ],
@@ -258,7 +253,7 @@ fsm.jump('first', 'second');
 You can define synchronous callbacks as long as the callback returns the options object that is going to be passed to the next callback in the chain:
 
 ```javascript
-var fsm = StateMachine({
+const fsm = StateMachine({
     events: [
       { name: 'jump', from: 'here', to: 'there' }
     ],
@@ -279,7 +274,7 @@ fsm.jump();
 You can define asynchronous callbacks as long as the callback returns a new promise that resolves with the options object when the asynchronous operation is completed. If the asynchronous operation is unsuccessful, you can throw an error that will be propagated throughout the chain.
 
 ```javascript
-var fsm = StateMachine({
+const fsm = StateMachine({
     events: [
       { name: 'jump', from: 'here', to: 'there' }
     ],
@@ -293,7 +288,7 @@ var fsm = StateMachine({
     }
   });
 
-fsm.jump();
+await fsm.jump();
 ```
 
 ### Call order
@@ -323,7 +318,7 @@ By default, each callback in the promise chain is called with the `options` obje
 Callbacks can pass values that can be used by subsequent callbacks in the promise chain.
 
 ```javascript
-var fsm = StateMachine({
+const fsm = StateMachine({
   initial: 'one',
   events: [
     { name: 'start', from: 'one', to: 'another' }
@@ -355,10 +350,10 @@ fsm.start().then(function (options) {
 
 #### Beyond the library boundary
 
-The `options` object can be hidden from the promises added by the end user by setting the __options.res__ property. This way the subsequent promises that are not part of the state machine work do not receive the `options` object.
+The `options` object can be hidden from the promises added by the end user by setting the __options.res__ property. This way the subsequent promises that are not part of the state machine do not receive the `options` object.
 
 ```javascript
-var fsm = StateMachine({
+const fsm = StateMachine({
   initial: 'one',
   events: [
     { name: 'start', from: 'one', to: 'another' }
@@ -372,10 +367,9 @@ var fsm = StateMachine({
   }
 });
 
-fsm.start().then(function (data) {
-  console.log(data);
-  // { val: 'result of running start' }
-});
+const result = await fsm.start();
+
+console.log(result);
 ```
 
 ### Configuring callback prefix
@@ -435,7 +429,7 @@ It is not advisable to let the errors that can be handled gracefully at callback
 The following is an example where the error is handled inside a synchronous callback:
 
 ```javascript
-var fsm = StateMachine({
+const fsm = StateMachine({
   initial: 'green',
   events: [
     { name: 'warn',  from: 'green',  to: 'yellow' }
@@ -452,16 +446,16 @@ var fsm = StateMachine({
   }
 });
 
-fsm.warn().then(function () {
-  fsm.current === 'yellow';
-  // true
-});
+await fsm.warn()
+
+fsm.current === 'yellow';
+// true
 ```
 
 The same inside an asynchronous callback:
 
 ```javascript
-var fsm = StateMachine({
+const fsm = StateMachine({
   initial: 'green',
   events: [
     { name: 'warn',  from: 'green',  to: 'yellow' }
@@ -478,10 +472,10 @@ var fsm = StateMachine({
   }
 });
   
-fsm.warn().then(function () {
-  fsm.current === 'yellow';
-  // true
-})
+await fsm.warn()
+
+fsm.current === 'yellow';
+// true
 ```
 
 ## Recipes
@@ -551,13 +545,6 @@ If your pseudo state's callback returns a Promise, you must return the call to t
 
 You can visualize the state machine as a UML diagram in vscode using the [Finite state machine viewer](https://marketplace.visualstudio.com/items?itemName=vstirbu.fsm-viewer) extension.
 
-### Intellisense
-
-You can enable intellisense by including at the top of you file:
-
-```javascript
-// @ts-check
-```
 
 ### UML visualization
 
