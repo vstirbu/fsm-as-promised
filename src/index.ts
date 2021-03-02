@@ -18,20 +18,50 @@ const AssignFirstArgumentStamp = stampit.compose({
 });
 
 interface StateMachine extends EventEmitter {
+  /**
+   * The current state
+   */
   current: string;
+  /**
+   * Determines is the event can be triggered in the current state
+   */
   can(event: string): boolean;
+  /**
+   * Determines is the event can not be triggered in the current state
+   */
   cannot(event: string): boolean;
   is(state: string): boolean;
+  /**
+   * Determines if the provided state is final
+   */
   isFinal(state: string): boolean;
+  /**
+   * Determines if the provided state exists in the current state machine
+   */
   hasState(state: string): boolean;
+  /**
+   * The instance id of the state machine
+   */
   instanceId(): string;
   [k: string]: any;
 }
 
 interface EventSpecification {
+  /**
+   * The event name
+   */
   name: string;
+  /**
+   * The state in which the event is triggered
+   */
   from: string | string[];
+  /**
+   * The state in which the state machine transitiones when the event completes
+   */
   to?: string | string[];
+  /**
+   * The condition function that determines the state for conditional events
+   */
   condition?: {
     (args: any[]): string | number | Promise<string | number>;
   };
@@ -55,14 +85,29 @@ interface CallbackOptions {
 }
 
 interface StateMachineConfiguration {
+  /**
+   * The initial state
+   */
   initial: string;
+  /**
+   * The final states
+   */
   final: string | string[];
+  /**
+   * The events
+   */
   events: EventSpecification[];
+  /**
+   * The callbacks
+   */
   callbacks?: {
     [k: string]: {
       (options: CallbackOptions): void | Promise<void>;
     };
   };
+  /**
+   * Custom error handler
+   */
   error?: {
     (
       message: string,
