@@ -25,7 +25,7 @@ jobs:
 
       - name: build
         run: |
-          npm build
+          npm run build
 
       - name: publish
         env:
