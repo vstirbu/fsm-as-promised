@@ -31,7 +31,7 @@ interface StateMachine extends EventEmitter {
 interface EventSpecification {
   name: string;
   from: string | string[];
-  to: string | string[];
+  to?: string | string[];
   condition?: {
     (args: any[]): string | number | Promise<string | number>;
   };
@@ -43,7 +43,7 @@ interface CallbackOptions {
    */
   name: string;
   from: string;
-  to?: string;
+  to: string;
   /**
    * Event arguments
    */
