@@ -43,7 +43,7 @@ interface CallbackOptions {
    */
   name: string;
   from: string;
-  to: string;
+  to?: string;
   /**
    * Event arguments
    */
