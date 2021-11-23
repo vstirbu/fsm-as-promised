@@ -87,12 +87,14 @@ interface CallbackOptions {
 interface StateMachineConfiguration {
   /**
    * The initial state
+   *
+   * @default 'none'
    */
-  initial: string;
+  initial?: string;
   /**
    * The final states
    */
-  final: string | string[];
+  final?: string | string[];
   /**
    * The events
    */
